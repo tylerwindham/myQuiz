@@ -1,12 +1,13 @@
 package com.myquiz.tylerwindham.myquiz;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Tyler on 10/25/2015.
  */
-public class Question {
+public class Question implements Serializable {
 
     String question;
     String answer;

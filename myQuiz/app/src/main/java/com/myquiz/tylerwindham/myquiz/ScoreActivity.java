@@ -1,40 +1,29 @@
 package com.myquiz.tylerwindham.myquiz;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
-public class HomeActivity extends ActionBarActivity {
+public class ScoreActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Button takeQuiz = (Button) findViewById(R.id.takeQuizButton);
-        Button pastQuiz = (Button) findViewById(R.id.pastQuizzesButton);
+        setContentView(R.layout.activity_score);
 
-        takeQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), QuestionActivity.class);
-                startActivityForResult(intent,0);
+        TextView scoreLabel = (TextView) findViewById(R.id.scoreLabel);
+        TextView numericScore = (TextView) findViewById(R.id.numericScore);
 
-            }
-        });
+        double score = getIntent().getDoubleExtra("score", 0);
 
-        pastQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PastQuizzesActivity.class);
-                startActivityForResult(intent,0);
+        numericScore.setText(String.valueOf(score));
 
-            }
-        });;
 
 
     }
@@ -43,7 +32,7 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_score, menu);
         return true;
     }
 

@@ -10,5 +10,9 @@
     <string name="d">D</string>
     <string name="e">E</string>
     <string name="title_activity_question">QuestionActivity</string>
+    <string name="title_activity_score">ScoreActivity</string>
+    <string name="finalScore">Score</string>
+    <string name="title_activity_past_quizzes">PastQuizzesActivity</string>
+    <string name="quizzes">Quizzes</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.myquiz.tylerwindham.myquiz;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,8 @@ public class QuestionActivity extends ActionBarActivity {
         setContentView(R.layout.question_activity);
 
 
-        TextView question = (TextView) findViewById(R.id.question);
-
+        final TextView question = (TextView) findViewById(R.id.question);
+        final TextView score = (TextView) findViewById(R.id.score);
         String q = "What is the capitol of Thailand?";
         List<String> answers = new ArrayList<>();
         answers.add("China");
@@ -34,13 +36,13 @@ public class QuestionActivity extends ActionBarActivity {
         final String answer = "B";
         final Question ques = new Question(q, answer, answers);
 
-        String q2 = "What is the capitol of Austin?";
+        String q2 = "What is the capitol of Texas?";
         List<String> answers2 = new ArrayList<>();
-        answers.add("Austin");
-        answers.add("Houston");
-        answers.add("Dallas");
-        answers.add("San Antonio");
-        answers.add("Amarillo");
+        answers2.add("Austin");
+        answers2.add("Houston");
+        answers2.add("Dallas");
+        answers2.add("San Antonio");
+        answers2.add("Amarillo");
 
         final String answer2 = "A";
 
@@ -51,9 +53,11 @@ public class QuestionActivity extends ActionBarActivity {
         questions.add(ques2);
 
         final Quiz quiz = new Quiz(questions);
+        quiz.quizName = "Quiz 1";
 
 
             question.setText(quiz.questionList.get(quiz.current).question);
+            score.setText("Score: " + quiz.score);
 
 
             final Button aButton = (Button) findViewById(R.id.aButton);
@@ -68,13 +72,68 @@ public class QuestionActivity extends ActionBarActivity {
                 public void onClick(View v) {
 
                     if(aButton.getText().toString().equals(ques.answer)){
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+                           quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+                        }else{
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }else{
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+
+                        }else{
+                            quiz.current++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }
                 }
             });
@@ -83,13 +142,69 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(bButton.getText().toString().equals(ques.answer)){
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+                        }else{
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }else{
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+
+                            quiz.score = ((double)quiz.correctCount/ quiz.questionList.size()) * 100 ;
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+
+                        }else{
+                            quiz.current++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }
                 }
             });
@@ -98,13 +213,71 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(cButton.getText().toString().equals(ques.answer)){
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+                        }else{
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }else{
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+
+                        }else{
+                            quiz.current++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }
                 }
             });
@@ -113,13 +286,69 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(dButton.getText().toString().equals(ques.answer)){
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+                        }else{
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }else{
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+
+                        }else{
+                            quiz.current++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }
                 }
             });
@@ -127,14 +356,73 @@ public class QuestionActivity extends ActionBarActivity {
             eButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    quiz.current++;
+
                     if(eButton.getText().toString().equals(ques.answer)){
-                        Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+                        }else{
+                            quiz.current++;
+                            quiz.correctCount++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }else{
-                        quiz.current++;
-                        Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
-                        toast.show();
+                        if(quiz.current+1 == quiz.questionList.size()){
+                            //Reached last question, return the final score
+                            quiz.current++;
+
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+
+                            try {
+                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("score", quiz.score);
+                            startActivityForResult(intent,0);
+
+                        }else{
+                            quiz.current++;
+                            quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
+                            ques.answer = quiz.questionList.get(quiz.current).answer;
+                            ques.question = quiz.questionList.get(quiz.current).question;
+                            ques.answers = quiz.questionList.get(quiz.current).answers;
+                            question.setText(quiz.questionList.get(quiz.current).question);
+                            score.setText("Score: " + quiz.score);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+
                     }
                 }
             });

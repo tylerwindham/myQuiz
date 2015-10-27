@@ -20,6 +20,21 @@
             android:name=".QuestionActivity"
             android:label="@string/title_activity_question" >
         </activity>
+        <activity
+            android:name=".ScoreActivity"
+            android:label="@string/title_activity_score"
+            android:parentActivityName=".HomeActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.myquiz.tylerwindham.myquiz.HomeActivity" />
+            >
+        </activity>
+        <activity
+            android:name=".PastQuizzesActivity"
+            android:label="@string/title_activity_past_quizzes" >
+        </activity>
     </application>
 
 </manifest>

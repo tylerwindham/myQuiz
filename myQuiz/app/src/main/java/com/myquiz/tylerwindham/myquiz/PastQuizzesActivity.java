@@ -1,49 +1,47 @@
 package com.myquiz.tylerwindham.myquiz;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.io.IOException;
+import java.util.List;
 
 
-public class HomeActivity extends ActionBarActivity {
+public class PastQuizzesActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Button takeQuiz = (Button) findViewById(R.id.takeQuizButton);
-        Button pastQuiz = (Button) findViewById(R.id.pastQuizzesButton);
-
-        takeQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), QuestionActivity.class);
-                startActivityForResult(intent,0);
-
-            }
-        });
-
-        pastQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PastQuizzesActivity.class);
-                startActivityForResult(intent,0);
-
-            }
-        });;
+        setContentView(R.layout.activity_past_quizzes);
+        ListView listView = (ListView) findViewById(R.id.quizzes);
 
 
+
+        try {
+            Quiz cachedEntry = (Quiz)InternalStorage.readObject(this, "Quiz");
+
+                String[] values = {cachedEntry.quizName};
+                Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
+                ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+                listView.setAdapter(codeLearnArrayAdapter);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_past_quizzes, menu);
         return true;
     }
 
