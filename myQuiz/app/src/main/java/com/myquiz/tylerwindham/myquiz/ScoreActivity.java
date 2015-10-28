@@ -7,7 +7,28 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.Legend.LegendForm;
+import com.github.mikephil.charting.components.Legend.LegendPosition;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.XAxis.XAxisPosition;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.components.YAxis.AxisDependency;
+import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.filter.Approximator;
+import com.github.mikephil.charting.data.filter.Approximator.ApproximatorType;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.*;
 
 public class ScoreActivity extends ActionBarActivity {
 
@@ -22,6 +43,46 @@ public class ScoreActivity extends ActionBarActivity {
         double score = getIntent().getDoubleExtra("score", 0);
 
         numericScore.setText(String.valueOf(score));
+
+        BarChart chart = (BarChart) findViewById(R.id.chart); // need to look into
+        BarData data = new BarData(getXAxisValues(), getDataSet());
+        chart.setData(data);
+        chart.setDescription("");
+        chart.animateXY(2000, 2000);
+        chart.invalidate();
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxisPosition.BOTTOM);
+
+        //YAxis yAxis = chart.getAxisLeft();
+       // yAxis
+    }
+
+    private ArrayList<BarDataSet> getDataSet() {
+        //pretend 100 students in class
+
+        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+        Random rand = new Random();
+        for(int i = 0; i < 5; i++){
+            valueSet1.add(new BarEntry(rand.nextInt(50), i));
+        }
+
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Question Statistics");
+        barDataSet1.setColors(ColorTemplate.VORDIPLOM_COLORS);
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(barDataSet1);
+        return dataSets;
+    }
+
+    private ArrayList<String> getXAxisValues() {
+        ArrayList<String> xAxis = new ArrayList<>();
+        xAxis.add("A");
+        xAxis.add("B");
+        xAxis.add("C");
+        xAxis.add("D");
+        xAxis.add("E");
+        return xAxis;
     }
 
     @Override

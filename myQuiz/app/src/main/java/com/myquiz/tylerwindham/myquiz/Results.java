@@ -36,7 +36,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Results extends ActionBarActivity { // NOT WORKING YET
     @Override
@@ -56,8 +56,9 @@ public class Results extends ActionBarActivity { // NOT WORKING YET
         //pretend 100 students in class
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
+        Random rand = new Random();
         for(int i = 0; i < 5; i++){
-            valueSet1.add(new BarEntry(50.0f, i));
+            valueSet1.add(new BarEntry(rand.nextInt(50), i));
         }
 
 //        BarEntry v1e1 = new BarEntry(110.000f, 0); // A
@@ -71,7 +72,7 @@ public class Results extends ActionBarActivity { // NOT WORKING YET
 //        BarEntry v1e5 = new BarEntry(90.000f, 4); // E
 //        valueSet1.add(v1e5);
 
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Brand 1");
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Question Statistics");
         barDataSet1.setColors(ColorTemplate.JOYFUL_COLORS);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
