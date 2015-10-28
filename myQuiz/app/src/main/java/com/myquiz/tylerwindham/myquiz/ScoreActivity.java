@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-
 public class ScoreActivity extends ActionBarActivity {
 
     @Override
@@ -23,11 +22,7 @@ public class ScoreActivity extends ActionBarActivity {
         double score = getIntent().getDoubleExtra("score", 0);
 
         numericScore.setText(String.valueOf(score));
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

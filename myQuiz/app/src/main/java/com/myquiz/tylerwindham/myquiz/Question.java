@@ -14,7 +14,6 @@ public class Question implements Serializable {
     List<String> answers;
     List<String> choices;
 
-
     Question(String q, String a, List<String>answ){
         this.question = q;
         this.answer = a;
@@ -25,7 +24,6 @@ public class Question implements Serializable {
         this.choices.add("[C]");
         this.choices.add("[D]");
         this.choices.add("[E]");
-
 
         for(int i=0; i < answers.size(); ++i){
             this.question += "\n" + choices.get(i) + " " + answers.get(i);

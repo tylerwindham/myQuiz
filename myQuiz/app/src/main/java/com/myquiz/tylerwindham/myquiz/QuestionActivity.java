@@ -15,14 +15,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class QuestionActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity);
-
 
         final TextView question = (TextView) findViewById(R.id.question);
         final TextView score = (TextView) findViewById(R.id.score);
@@ -54,7 +52,6 @@ public class QuestionActivity extends ActionBarActivity {
 
         final Quiz quiz = new Quiz(questions);
         quiz.quizName = "Quiz 1";
-
 
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
@@ -426,18 +423,6 @@ public class QuestionActivity extends ActionBarActivity {
                     }
                 }
             });
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

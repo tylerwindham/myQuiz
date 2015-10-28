@@ -11,7 +11,6 @@ import android.widget.ListView;
 import java.io.IOException;
 import java.util.List;
 
-
 public class PastQuizzesActivity extends ActionBarActivity {
 
     @Override
@@ -20,15 +19,13 @@ public class PastQuizzesActivity extends ActionBarActivity {
         setContentView(R.layout.activity_past_quizzes);
         ListView listView = (ListView) findViewById(R.id.quizzes);
 
-
-
         try {
             Quiz cachedEntry = (Quiz)InternalStorage.readObject(this, "Quiz");
 
-                String[] values = {cachedEntry.quizName};
-                Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
-                ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
-                listView.setAdapter(codeLearnArrayAdapter);
+            String[] values = {cachedEntry.quizName};
+            Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
+            ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+            listView.setAdapter(codeLearnArrayAdapter);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,7 +33,6 @@ public class PastQuizzesActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
