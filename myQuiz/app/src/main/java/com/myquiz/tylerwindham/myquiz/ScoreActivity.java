@@ -49,13 +49,14 @@ public class ScoreActivity extends ActionBarActivity {
         chart.setData(data);
         chart.setDescription("");
         chart.animateXY(2000, 2000);
+        chart.setDoubleTapToZoomEnabled(false);
         chart.invalidate();
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxisPosition.BOTTOM);
 
-        //YAxis yAxis = chart.getAxisLeft();
-       // yAxis
+        YAxis yAxis = chart.getAxisRight(); // hide right axis
+        yAxis.setEnabled(false);
     }
 
     private ArrayList<BarDataSet> getDataSet() {
