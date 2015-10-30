@@ -7,9 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PastQuizzesActivity extends ActionBarActivity {
 
@@ -24,8 +28,23 @@ public class PastQuizzesActivity extends ActionBarActivity {
 
             String[] values = {cachedEntry.quizName};
             Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
-            ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
-            listView.setAdapter(codeLearnArrayAdapter);
+            //ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+            //listView.setAdapter(codeLearnArrayAdapter);
+
+            List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+
+                Map<String, String> datum = new HashMap<String, String>(2);
+                datum.put("name", cachedEntry.quizName);
+                datum.put("score", "Score: " + String.valueOf(cachedEntry.score));
+                data.add(datum);
+
+            SimpleAdapter adapter = new SimpleAdapter(this, data,
+                    android.R.layout.simple_list_item_2,
+                    new String[] {"name", "score"},
+                    new int[] {android.R.id.text1,
+                            android.R.id.text2});
+            listView.setAdapter(adapter);
+
 
         } catch (IOException e) {
             e.printStackTrace();
