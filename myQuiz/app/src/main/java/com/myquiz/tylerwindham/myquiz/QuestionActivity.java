@@ -1,10 +1,14 @@
 package com.myquiz.tylerwindham.myquiz;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -350,10 +354,14 @@ public class QuestionActivity extends ActionBarActivity {
                 }
             });
 
+
             eButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    eButton.setBackgroundColor(Color.GRAY);
+
+                    /*
                     if(eButton.getText().toString().equals(ques.answer)){
                         if(quiz.current+1 == quiz.questionList.size()){
                             //Reached last question, return the final score
@@ -421,8 +429,11 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }
+                    */
                 }
             });
+
+
 
     }
 
@@ -448,4 +459,25 @@ public class QuestionActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+
+    public void onBackPressed() {
+        // your code.
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Leave Quiz")
+                .setMessage("Are you sure you want to leave the quiz?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //Stop the activity
+                       QuestionActivity.this.finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+ }
+

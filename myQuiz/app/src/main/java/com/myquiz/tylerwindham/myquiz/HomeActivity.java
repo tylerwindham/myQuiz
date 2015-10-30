@@ -1,6 +1,9 @@
 package com.myquiz.tylerwindham.myquiz;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -15,8 +19,10 @@ public class HomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Button takeQuiz = (Button) findViewById(R.id.takeQuizButton);
-        Button pastQuiz = (Button) findViewById(R.id.pastQuizzesButton);
+        ActionBar bar = getActionBar();
+       //bar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#009688"))));
+        FancyButton takeQuiz = (FancyButton) findViewById(R.id.takeQuizButton);
+        FancyButton pastQuiz = (FancyButton) findViewById(R.id.pastQuizzesButton);
 
         takeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,4 +67,13 @@ public class HomeActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void onBackPressed() {
+        // your code.
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.myquiz.tylerwindham.myquiz;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -106,5 +107,12 @@ public class ScoreActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // your code.
+        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+        startActivityForResult(intent,0);
     }
 }
