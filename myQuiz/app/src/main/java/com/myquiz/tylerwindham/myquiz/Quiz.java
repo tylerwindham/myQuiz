@@ -17,4 +17,25 @@ public class Quiz implements Serializable{
     Quiz(List<Question> questions){
         this.questionList = questions;
     }
+    int size(){
+        return questionList.size();
+    }
+
+    List<Question> getQuestions(){
+        return questionList;
+    }
+
+    Question getQuestion(int i){
+        return questionList.get(i);
+    }
+
+    public String toString(){
+        String a = "";
+        for(int i = 0; i < questionList.size(); i++){
+            a += questionList.get(i) + "\n";
+        }
+        return a;
+    }
+
+
 }

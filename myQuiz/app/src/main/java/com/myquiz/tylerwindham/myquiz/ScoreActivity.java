@@ -1,37 +1,40 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.Legend.LegendForm;
-import com.github.mikephil.charting.components.Legend.LegendPosition;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.components.YAxis.AxisDependency;
-import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.filter.Approximator;
-import com.github.mikephil.charting.data.filter.Approximator.ApproximatorType;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
+    QuestionActivity qa = new QuestionActivity();
+    int index;
+    public Quiz quiz(){
+        Quiz quiz = qa.getQuizQs();
+        return quiz;
+    }
+
+    public String correctAnswer(int index){
+        String questionAnswer = quiz().getQuestion(index).getAnswer();
+        return questionAnswer;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,14 @@ public class ScoreActivity extends ActionBarActivity {
         TextView numericScore = (TextView) findViewById(R.id.numericScore);
 
         double score = getIntent().getDoubleExtra("score", 0);
+        double quizQIndex = getIntent().getDoubleExtra("index", 0);
 
         numericScore.setText(String.valueOf(score));
 
-        BarChart chart = (BarChart) findViewById(R.id.chart); // need to look into
+        TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
+        questionLabel.setText("Question " + index + 1);
+
+        BarChart chart = (BarChart) findViewById(R.id.chart);
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
         chart.setDescription("");
@@ -53,11 +60,62 @@ public class ScoreActivity extends ActionBarActivity {
         chart.setDoubleTapToZoomEnabled(false);
         chart.invalidate();
 
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxisPosition.BOTTOM);
+        chart.getAxisRight().setEnabled(false); // gets rid of right y label
+        chart.getXAxis().setPosition(XAxisPosition.BOTTOM); // x label on bottom
+        chart.getLegend().setEnabled(false); // gets rid of legend
 
-        YAxis yAxis = chart.getAxisRight(); // hide right axis
-        yAxis.setEnabled(false);
+        FancyButton nextButton = (FancyButton) findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(quiz().current+1 == quiz().questionList.size()){
+                    //Reached last question, return the final score
+                    quiz().current++;
+                    quiz().correctCount++;
+
+                    try {
+                        InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Intent intent = new Intent(v.getContext(), HomeActivity.class);
+                    intent.putExtra("score", quiz().score);
+                    intent.putExtra("index", index++);
+                    startActivityForResult(intent,0);
+                }else{
+                    quiz().current++;
+                    quiz().correctCount++;
+                    TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
+                    questionLabel.setText("Question " + quiz().current + 1);
+                }
+
+            }
+        });
+    }
+
+    private void setCorrectColors(BarDataSet barDataSet1){
+        int r = Color.rgb(255, 140, 157);
+        int g = Color.rgb(192, 255, 140);
+        switch(correctAnswer(index)){
+            case "A":
+                barDataSet1.setColors(new int[]{g, r, r, r, r});
+                break;
+            case "B":
+                barDataSet1.setColors(new int[]{r, g, r, r, r});
+                break;
+            case "C":
+                barDataSet1.setColors(new int[]{r, r, g, r, r});
+                break;
+            case "D":
+                barDataSet1.setColors(new int[]{r, r, r, g, r});
+                break;
+            case "E":
+                barDataSet1.setColors(new int[]{r, r, r, r, g});
+                break;
+            default:
+                barDataSet1.setColors(ColorTemplate.VORDIPLOM_COLORS);
+                break;
+        }
     }
 
     private ArrayList<BarDataSet> getDataSet() {
@@ -65,12 +123,12 @@ public class ScoreActivity extends ActionBarActivity {
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         Random rand = new Random();
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 5; i++){ // set class random data for now
             valueSet1.add(new BarEntry(rand.nextInt(50), i));
         }
 
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Question Statistics");
-        barDataSet1.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        setCorrectColors(barDataSet1); // set correct bar to green, rest bars red color
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(barDataSet1);
@@ -84,6 +142,12 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("C");
         xAxis.add("D");
         xAxis.add("E");
+
+        for(int i = 0; i < xAxis.size(); i++){
+            if(xAxis.get(i) == correctAnswer(0))
+                xAxis.set(i, xAxis.get(i) +" (correct)");
+        }
+
         return xAxis;
     }
 

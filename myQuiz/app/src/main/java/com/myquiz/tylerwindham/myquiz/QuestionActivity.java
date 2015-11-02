@@ -8,10 +8,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +18,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends ActionBarActivity {
+    public Quiz getQuizQs(){
+        String q = "What is the capitol of Thailand?";
+        List<String> answers = new ArrayList<>();
+        answers.add("China");
+        answers.add("Bangcock");
+        answers.add("Texas");
+        answers.add("Bombay");
+        answers.add("Hamburg");
+        final String answer = "B";
+        final Question ques = new Question(q, answer, answers);
+
+        String q2 = "What is the capitol of Texas?";
+        List<String> answers2 = new ArrayList<>();
+        answers2.add("Austin");
+        answers2.add("Houston");
+        answers2.add("Dallas");
+        answers2.add("San Antonio");
+        answers2.add("Amarillo");
+
+        final String answer2 = "A";
+
+        final Question ques2 = new Question(q2, answer2, answers2);
+
+        List<Question> questions = new ArrayList<Question>();
+        questions.add(ques);
+        questions.add(ques2);
+
+        final Quiz quizQuestions = new Quiz(questions);
+
+        return quizQuestions;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +86,7 @@ public class QuestionActivity extends ActionBarActivity {
         final Quiz quiz = new Quiz(questions);
         quiz.quizName = "Quiz 1";
 
+
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
 
@@ -71,7 +101,6 @@ public class QuestionActivity extends ActionBarActivity {
             aButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if(aButton.getText().toString().equals(ques.answer)){
                         if(quiz.current+1 == quiz.questionList.size()){
                             //Reached last question, return the final score
