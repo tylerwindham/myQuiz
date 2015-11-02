@@ -29,6 +29,8 @@ public class Quiz implements Serializable{
         return questionList.get(i);
     }
 
+    public void addCurrent(){ current++; }
+
     public String toString(){
         String a = "";
         for(int i = 0; i < questionList.size(); i++){
@@ -36,6 +38,7 @@ public class Quiz implements Serializable{
         }
         return a;
     }
+
 
 
 }

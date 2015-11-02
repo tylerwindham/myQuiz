@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,16 +46,15 @@ public class ScoreActivity extends ActionBarActivity {
         TextView numericScore = (TextView) findViewById(R.id.numericScore);
 
         double score = getIntent().getDoubleExtra("score", 0);
-        double quizQIndex = getIntent().getDoubleExtra("index", 0);
 
         numericScore.setText(String.valueOf(score));
 
-        TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
-        questionLabel.setText("Question " + index + 1);
+        final TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
+        questionLabel.setText("Question " + (index+1));
 
-        BarChart chart = (BarChart) findViewById(R.id.chart);
-        BarData data = new BarData(getXAxisValues(), getDataSet());
-        chart.setData(data);
+        final BarChart chart = (BarChart) findViewById(R.id.chart);
+        final BarData[] data = {new BarData(getXAxisValues(), getDataSet())};
+        chart.setData(data[0]);
         chart.setDescription("");
         chart.animateXY(2000, 2000);
         chart.setDoubleTapToZoomEnabled(false);
@@ -68,11 +68,8 @@ public class ScoreActivity extends ActionBarActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(quiz().current+1 == quiz().questionList.size()){
-                    //Reached last question, return the final score
-                    quiz().current++;
-                    quiz().correctCount++;
-
+                if(index == quiz().questionList.size()-1){
+                    //Reached last question, return the to main screen // or to class average quiz score
                     try {
                         InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz());
                     } catch (IOException e) {
@@ -80,13 +77,13 @@ public class ScoreActivity extends ActionBarActivity {
                     }
                     Intent intent = new Intent(v.getContext(), HomeActivity.class);
                     intent.putExtra("score", quiz().score);
-                    intent.putExtra("index", index++);
                     startActivityForResult(intent,0);
                 }else{
-                    quiz().current++;
-                    quiz().correctCount++;
-                    TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
-                    questionLabel.setText("Question " + quiz().current + 1);
+                    index++;
+                    questionLabel.setText("Question " + (index+1));
+
+                    chart.setData(new BarData(getXAxisValues(), getDataSet()));
+                    chart.invalidate();
                 }
 
             }
@@ -144,7 +141,7 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("E");
 
         for(int i = 0; i < xAxis.size(); i++){
-            if(xAxis.get(i) == correctAnswer(0))
+            if(xAxis.get(i) == correctAnswer(index))
                 xAxis.set(i, xAxis.get(i) +" (correct)");
         }
 

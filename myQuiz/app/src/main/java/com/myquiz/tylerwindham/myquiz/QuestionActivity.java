@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionActivity extends ActionBarActivity {
+
     public Quiz getQuizQs(){
         String q = "What is the capitol of Thailand?";
         List<String> answers = new ArrayList<>();
@@ -48,6 +49,9 @@ public class QuestionActivity extends ActionBarActivity {
         final Quiz quizQuestions = new Quiz(questions);
 
         return quizQuestions;
+    }
+    public int getNums(){
+        return getQuizQs().size();
     }
 
     @Override
