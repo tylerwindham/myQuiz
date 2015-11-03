@@ -154,6 +154,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+
                             startActivityForResult(intent,0);
 
                         }else{

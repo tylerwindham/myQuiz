@@ -29,6 +29,7 @@ public class ScoreActivity extends ActionBarActivity {
     int index;
     public Quiz quiz(){
         Quiz quiz = qa.getQuizQs();
+        quiz.quizName = "Quiz 1";
         return quiz;
     }
 
@@ -65,6 +66,7 @@ public class ScoreActivity extends ActionBarActivity {
         chart.getLegend().setEnabled(false); // gets rid of legend
 
         FancyButton nextButton = (FancyButton) findViewById(R.id.nextButton);
+        nextButton.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

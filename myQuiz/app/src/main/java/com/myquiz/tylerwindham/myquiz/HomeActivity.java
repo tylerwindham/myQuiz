@@ -22,7 +22,9 @@ public class HomeActivity extends ActionBarActivity {
         ActionBar bar = getActionBar();
        //bar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#009688"))));
         FancyButton takeQuiz = (FancyButton) findViewById(R.id.takeQuizButton);
+        takeQuiz.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
         FancyButton pastQuiz = (FancyButton) findViewById(R.id.pastQuizzesButton);
+        pastQuiz.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
 
         takeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
