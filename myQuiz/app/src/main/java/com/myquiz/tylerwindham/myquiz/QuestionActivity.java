@@ -155,7 +155,11 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+<<<<<<< HEAD
                             intent.putExtra("quizObj", quiz);
+=======
+
+>>>>>>> origin/master
                             startActivityForResult(intent,0);
 
                         }else{
@@ -400,9 +404,13 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
 
-                    eButton.setBackgroundColor(Color.GRAY);
+                   // eButton.setBackgroundColor(Color.GRAY);
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
                     if(eButton.getText().toString().equals(ques.answer)){
                         if(quiz.current+1 == quiz.questionList.size()){
                             //Reached last question, return the final score
@@ -472,6 +480,10 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> origin/master
                 }
             });
 
@@ -521,5 +533,6 @@ public class QuestionActivity extends ActionBarActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
+
  }
 

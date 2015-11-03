@@ -26,7 +26,20 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
     int index;
+<<<<<<< HEAD
     Quiz quiz;
+=======
+    public Quiz quiz(){
+        Quiz quiz = qa.getQuizQs();
+        quiz.quizName = "Quiz 1";
+        return quiz;
+    }
+
+    public String correctAnswer(int index){
+        String questionAnswer = quiz().getQuestion(index).getAnswer();
+        return questionAnswer;
+    }
+>>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +70,7 @@ public class ScoreActivity extends ActionBarActivity {
         chart.getLegend().setEnabled(false); // gets rid of legend
 
         FancyButton nextButton = (FancyButton) findViewById(R.id.nextButton);
+        nextButton.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
