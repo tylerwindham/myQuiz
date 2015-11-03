@@ -25,17 +25,8 @@ import java.util.Random;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
-    QuestionActivity qa = new QuestionActivity();
     int index;
-    public Quiz quiz(){
-        Quiz quiz = qa.getQuizQs();
-        return quiz;
-    }
-
-    public String correctAnswer(int index){
-        String questionAnswer = quiz().getQuestion(index).getAnswer();
-        return questionAnswer;
-    }
+    Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +37,7 @@ public class ScoreActivity extends ActionBarActivity {
         TextView numericScore = (TextView) findViewById(R.id.numericScore);
 
         double score = getIntent().getDoubleExtra("score", 0);
+        quiz = (Quiz) getIntent().getSerializableExtra("quizObj");
 
         numericScore.setText(String.valueOf(score));
 
@@ -53,8 +45,8 @@ public class ScoreActivity extends ActionBarActivity {
         questionLabel.setText("Question " + (index+1));
 
         final BarChart chart = (BarChart) findViewById(R.id.chart);
-        final BarData[] data = {new BarData(getXAxisValues(), getDataSet())};
-        chart.setData(data[0]);
+        final BarData data = new BarData(getXAxisValues(), getDataSet());
+        chart.setData(data);
         chart.setDescription("");
         chart.animateXY(2000, 2000);
         chart.setDoubleTapToZoomEnabled(false);
@@ -68,15 +60,15 @@ public class ScoreActivity extends ActionBarActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(index == quiz().questionList.size()-1){
+                if(index == quiz.questionList.size()-1){
                     //Reached last question, return the to main screen // or to class average quiz score
                     try {
-                        InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz());
+                        InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     Intent intent = new Intent(v.getContext(), HomeActivity.class);
-                    intent.putExtra("score", quiz().score);
+                    intent.putExtra("score", quiz.score);
                     startActivityForResult(intent,0);
                 }else{
                     index++;
@@ -93,7 +85,8 @@ public class ScoreActivity extends ActionBarActivity {
     private void setCorrectColors(BarDataSet barDataSet1){
         int r = Color.rgb(255, 140, 157);
         int g = Color.rgb(192, 255, 140);
-        switch(correctAnswer(index)){
+        switch(quiz.getQuestion(index).getAnswer()){
+//        switch(correctAnswer(index)){
             case "A":
                 barDataSet1.setColors(new int[]{g, r, r, r, r});
                 break;
@@ -141,7 +134,7 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("E");
 
         for(int i = 0; i < xAxis.size(); i++){
-            if(xAxis.get(i) == correctAnswer(index))
+            if(xAxis.get(i) == quiz.getQuestion(index).getAnswer())
                 xAxis.set(i, xAxis.get(i) +" (correct)");
         }
 

@@ -120,6 +120,7 @@ public class QuestionActivity extends ActionBarActivity {
                                 e.printStackTrace();
                             }
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
+                            intent.putExtra("quizObj", quiz);
                             intent.putExtra("score", quiz.score);
                             startActivityForResult(intent,0);
                         }else{
@@ -154,6 +155,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
@@ -193,6 +195,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
@@ -225,6 +228,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
@@ -265,6 +269,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
@@ -298,6 +303,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
@@ -337,6 +343,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
@@ -369,6 +376,7 @@ public class QuestionActivity extends ActionBarActivity {
                             }
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
@@ -394,7 +402,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                     eButton.setBackgroundColor(Color.GRAY);
 
-                    /*
+
                     if(eButton.getText().toString().equals(ques.answer)){
                         if(quiz.current+1 == quiz.questionList.size()){
                             //Reached last question, return the final score
@@ -414,7 +422,8 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
-                            startActivityForResult(intent,0);
+                            intent.putExtra("quizObj", quiz);
+                            startActivityForResult(intent, 0);
                         }else{
                             quiz.current++;
                             quiz.correctCount++;
@@ -447,6 +456,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
@@ -462,7 +472,6 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }
-                    */
                 }
             });
 
