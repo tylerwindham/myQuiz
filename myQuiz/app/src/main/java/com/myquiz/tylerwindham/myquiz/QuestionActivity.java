@@ -393,9 +393,9 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
 
-                    eButton.setBackgroundColor(Color.GRAY);
+                   // eButton.setBackgroundColor(Color.GRAY);
 
-                    /*
+
                     if(eButton.getText().toString().equals(ques.answer)){
                         if(quiz.current+1 == quiz.questionList.size()){
                             //Reached last question, return the final score
@@ -463,7 +463,7 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }
-                    */
+                    
                 }
             });
 
@@ -513,5 +513,6 @@ public class QuestionActivity extends ActionBarActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
+
  }
 
