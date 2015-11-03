@@ -18,7 +18,7 @@ public class Parser extends Activity {
 
     Vector<String> quizList;
     public void getFile(Context context) {
-        AssetManager assetManager = getAssets();
+        AssetManager assetManager = context.getAssets();
         InputStream inputFile;
 
         try {

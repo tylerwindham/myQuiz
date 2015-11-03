@@ -26,20 +26,11 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
     int index;
-<<<<<<< HEAD
-    Quiz quiz;
-=======
-    public Quiz quiz(){
-        Quiz quiz = qa.getQuizQs();
-        quiz.quizName = "Quiz 1";
-        return quiz;
-    }
 
-    public String correctAnswer(int index){
-        String questionAnswer = quiz().getQuestion(index).getAnswer();
-        return questionAnswer;
-    }
->>>>>>> origin/master
+    Quiz quiz;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

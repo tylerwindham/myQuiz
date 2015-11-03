@@ -55,6 +55,10 @@ public class HomeActivity extends ActionBarActivity {
         FancyButton pastQuiz = (FancyButton) findViewById(R.id.pastQuizzesButton);
         pastQuiz.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
 
+        Parser parser = new Parser();
+        parser.getFile(getApplicationContext());
+
+
         takeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
