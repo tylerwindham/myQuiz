@@ -47,7 +47,7 @@ public class QuestionActivity extends ActionBarActivity {
         questions.add(ques2);
 
         final Quiz quizQuestions = new Quiz(questions);
-
+        quizQuestions.quizName = "Quiz 1";
         return quizQuestions;
     }
     public int getNums(){
