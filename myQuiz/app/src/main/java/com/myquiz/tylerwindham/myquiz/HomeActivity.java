@@ -1,7 +1,9 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
@@ -10,15 +12,42 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class HomeActivity extends ActionBarActivity {
 
+    private static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+
+        //THE ATTEMPT THAT CALLS PARSE CLASS
+        //Parser tester = new Parser();
+        //HomeActivity.context = getApplicationContext();
+        //tester.getFile(context);
+
+        /*TRIED DOING IT STRAIGHT UP HERE INSTEAD
+        AssetManager assetManager = getAssets();
+
+        InputStream input;
+        try {
+            input = assetManager.open("test.txt");
+            int size = input.available();
+            byte[] buffer = new byte[size];
+            input.read(buffer);
+            input.close();
+            String text = new String(buffer);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+            setContentView(R.layout.activity_home);
         ActionBar bar = getActionBar();
        //bar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#009688"))));
         FancyButton takeQuiz = (FancyButton) findViewById(R.id.takeQuizButton);
