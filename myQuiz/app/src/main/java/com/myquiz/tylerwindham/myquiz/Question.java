@@ -15,6 +15,7 @@ public class Question implements Serializable {
     List<String> choices;
 
     Question(String q, String a, List<String>answ){
+
         this.question = q;
         this.answer = a;
         this.answers = answ;

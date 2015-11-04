@@ -5,8 +5,12 @@ import android.content.res.AssetManager;
 import android.content.Context;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import android.util.Log;
@@ -16,31 +20,68 @@ import android.util.Log;
  */
 public class Parser extends Activity {
 
-    Vector<String> quizList;
+    Vector<String> quizList = new Vector<String>();
+    Vector<Question> questionList = new Vector<Question>();
+
     public void getFile(Context context) {
         AssetManager assetManager = context.getAssets();
         InputStream inputFile;
 
+        String line;
+
         try {
             inputFile = assetManager.open("test.txt");
-                if (inputFile != null) {
-                    Log.i("parse class", "IT WORKED");
+            InputStreamReader streamReader = new InputStreamReader(inputFile);
+            BufferedReader bufferedReader = new BufferedReader(streamReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+
+                quizList.add(line);
+                Log.i("buffer reader", line);
+            }
+
+            bufferedReader.close();
+
+            String question = new String();
+            String answer = new String();
+            List<String> answers = new ArrayList<String>();
+
+            for (int i = 0; i < quizList.size(); ++i) {
+                char temp = quizList.elementAt(i).charAt(0);
+                switch(temp) {
+                    case '$':
+                        question = quizList.elementAt(i).substring(1);
+                        break;
+                    case 'A':
+                        answers.add(0, quizList.elementAt(i).substring(1));
+                        break;
+                    case 'B':
+                        answers.add(1, quizList.elementAt(i).substring(1));
+                        break;
+                    case 'C':
+                        answers.add(2, quizList.elementAt(i).substring(1));
+                        break;
+                    case 'D':
+                        answers.add(3, quizList.elementAt(i).substring(1));
+                        break;
+                    case 'E':
+                        answers.add(4, quizList.elementAt(i).substring(1));
+                        break;
+                    case '@':
+                        answer = quizList.elementAt(i).substring(1);
+                        Question nextQ = new Question(question, answer, answers);
+                        questionList.add(nextQ);
+                        answers.clear();
+                        break;
+                    default:
+                        break;
                 }
+            }
+            Log.i("parse class", questionList.elementAt(0).question);
+            Log.i("parse class", questionList.elementAt(1).question);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void parseRead(Context context) {
-        InputStream is;
-
-        try {
-            is = new BufferedInputStream(context.getResources().getAssets().open("test.txt"));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
 }
