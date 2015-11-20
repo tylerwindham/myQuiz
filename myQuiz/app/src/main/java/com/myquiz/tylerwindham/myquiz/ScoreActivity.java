@@ -27,17 +27,19 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
     int index;
-
     Quiz quiz;
+    QuestionActivity q = new QuestionActivity();
 
-
-
+    public Quiz quiz(){ return q.getQuizQs(); }
+    public String correctAnswer(int index){
+        return quiz().getQuestion(index).getAnswer();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
-
+        index = 0;
         TextView scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         TextView numericScore = (TextView) findViewById(R.id.numericScore);
 
@@ -50,11 +52,10 @@ public class ScoreActivity extends ActionBarActivity {
         questionLabel.setText("Question " + (index+1));
 
         final BarChart chart = (BarChart) findViewById(R.id.chart);
-        final BarData data = new BarData(getXAxisValues(), getDataSet());
-        chart.setData(data);
+        chart.setData(new BarData(getXAxisValues(), getDataSet()));
         chart.setDescription("");
         chart.animateXY(2000, 2000);
-        chart.setDoubleTapToZoomEnabled(false);
+        chart.setDoubleTapToZoomEnabled(false); // gets rid of zooming into graph
         chart.invalidate();
 
         chart.getAxisRight().setEnabled(false); // gets rid of right y label
@@ -77,9 +78,10 @@ public class ScoreActivity extends ActionBarActivity {
                     intent.putExtra("score", quiz.score);
                     startActivityForResult(intent,0);
                 }else{
+                    Log.d("CREATE", index+ "\n");
                     index++;
                     questionLabel.setText("Question " + (index+1));
-
+                    Log.d("CREATE", index + "\n");
                     chart.setData(new BarData(getXAxisValues(), getDataSet()));
                     chart.invalidate();
 
@@ -87,7 +89,6 @@ public class ScoreActivity extends ActionBarActivity {
                         nextButton.setVisibility(View.GONE);
                     }
                 }
-
             }
         });
     }
@@ -95,8 +96,7 @@ public class ScoreActivity extends ActionBarActivity {
     private void setCorrectColors(BarDataSet barDataSet1){
         int r = Color.rgb(255, 140, 157);
         int g = Color.rgb(192, 255, 140);
-        switch(quiz.getQuestion(index).getAnswer()){
-//        switch(correctAnswer(index)){
+        switch(correctAnswer(index)){
             case "A":
                 barDataSet1.setColors(new int[]{g, r, r, r, r});
                 break;
@@ -144,7 +144,7 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("E");
 
         for(int i = 0; i < xAxis.size(); i++){
-            if(xAxis.get(i) == quiz.getQuestion(index).getAnswer())
+            if(xAxis.get(i) == correctAnswer(index))
                 xAxis.set(i, xAxis.get(i) +" (correct)");
         }
 
