@@ -3,11 +3,13 @@ package com.myquiz.tylerwindham.myquiz;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,8 +49,11 @@ public class HomeActivity extends ActionBarActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-            setContentView(R.layout.activity_home);
+
+        //Log.d("INSIDE HOME ACTIVITY", "BBBBBBBBBBB");
+        setContentView(R.layout.activity_home);
         ActionBar bar = getActionBar();
+
        //bar.setBackgroundDrawable(new ColorDrawable((Color.parseColor("#009688"))));
         FancyButton takeQuiz = (FancyButton) findViewById(R.id.takeQuizButton);
         takeQuiz.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
@@ -57,7 +62,17 @@ public class HomeActivity extends ActionBarActivity {
 
         Parser parser = new Parser();
         parser.getFile(getApplicationContext());
+        SharedPreferences settings = getSharedPreferences(Preferences.PREFS_NAME, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = settings.edit();
 
+//Set "hasLoggedIn" to true
+        editor.putBoolean("hasLoggedIn", true);
+
+// Commit the edits!
+        editor.commit();
+
+        String username = getIntent().getStringExtra("username");
+        Log.d("USERNAME", username);
 
         takeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override

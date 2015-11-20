@@ -14,5 +14,6 @@
     <string name="finalScore">Score</string>
     <string name="title_activity_past_quizzes">PastQuizzesActivity</string>
     <string name="quizzes">Quizzes</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>

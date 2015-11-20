@@ -3,6 +3,7 @@ package com.myquiz.tylerwindham.myquiz;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -60,7 +61,7 @@ public class ScoreActivity extends ActionBarActivity {
         chart.getXAxis().setPosition(XAxisPosition.BOTTOM); // x label on bottom
         chart.getLegend().setEnabled(false); // gets rid of legend
 
-        FancyButton nextButton = (FancyButton) findViewById(R.id.nextButton);
+        final FancyButton nextButton = (FancyButton) findViewById(R.id.nextButton);
         nextButton.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +82,10 @@ public class ScoreActivity extends ActionBarActivity {
 
                     chart.setData(new BarData(getXAxisValues(), getDataSet()));
                     chart.invalidate();
+
+                    if(index == quiz.questionList.size()-1){
+                        nextButton.setVisibility(View.GONE);
+                    }
                 }
 
             }
@@ -158,12 +163,15 @@ public class ScoreActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.action_settings:
+                return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -171,7 +179,8 @@ public class ScoreActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         // your code.
-        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-        startActivityForResult(intent,0);
+        //Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+        //startActivityForResult(intent,0);
+        NavUtils.navigateUpFromSameTask(this);
     }
 }
