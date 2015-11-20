@@ -15,6 +15,8 @@ import java.util.Vector;
 
 import android.util.Log;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * Created by Snyperanihilatr on 11/2/2015.
  */
@@ -23,15 +25,18 @@ public class Parser extends Activity {
     Vector<String> quizList = new Vector<String>();
     Vector<Question> questionList = new Vector<Question>();
 
-    public void getFile(Context context) {
-        AssetManager assetManager = context.getAssets();
-        InputStream inputFile;
+    Quiz quiz;
+
+    public Quiz getQuiz(String file) {
+
+
+
 
         String line;
 
         try {
-            inputFile = assetManager.open("test.txt");
-            InputStreamReader streamReader = new InputStreamReader(inputFile);
+            InputStream in = IOUtils.toInputStream(file, "UTF-8");
+            InputStreamReader streamReader = new InputStreamReader(in);
             BufferedReader bufferedReader = new BufferedReader(streamReader);
 
             while ((line = bufferedReader.readLine()) != null) {
@@ -79,9 +84,15 @@ public class Parser extends Activity {
             }
             Log.i("parse class", questionList.elementAt(0).question);
             Log.i("parse class", questionList.elementAt(1).question);
+            Quiz quiz2 = new Quiz(questionList);
+
+            return quiz2;
+
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d("FAIL", "FAILUREEEEEE");
         }
+        return quiz;
     }
 
 }

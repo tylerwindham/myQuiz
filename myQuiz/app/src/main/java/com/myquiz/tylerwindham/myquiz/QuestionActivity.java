@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,8 @@ public class QuestionActivity extends ActionBarActivity {
         questions.add(ques);
         questions.add(ques2);
 
+        Log.d("TEST", "TEST");
+
         final Quiz quizQuestions = new Quiz(questions);
         quizQuestions.quizName = "Quiz 1";
         return quizQuestions;
@@ -62,6 +65,7 @@ public class QuestionActivity extends ActionBarActivity {
 
         final TextView question = (TextView) findViewById(R.id.question);
         final TextView score = (TextView) findViewById(R.id.score);
+         /*
         String q = "What is the capitol of Thailand?";
         List<String> answers = new ArrayList<>();
         answers.add("China");
@@ -91,10 +95,13 @@ public class QuestionActivity extends ActionBarActivity {
         final Quiz quiz = new Quiz(questions);
         quiz.quizName = "Quiz 1";
 
+        */
 
+        final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+        quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
-
+            final Question ques = quiz.getQuestion(0);
 
             final Button aButton = (Button) findViewById(R.id.aButton);
             final Button bButton = (Button) findViewById(R.id.bButton);

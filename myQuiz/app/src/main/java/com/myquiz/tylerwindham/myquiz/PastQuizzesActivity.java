@@ -1,12 +1,15 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -28,7 +31,14 @@ public class PastQuizzesActivity extends ActionBarActivity {
         //bar.setDisplayHomeAsUpEnabled(true);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         try {
-            Quiz cachedEntry = (Quiz)InternalStorage.readObject(this, "Quiz");
+            final List<Quiz> quizzes = new ArrayList<Quiz>();
+            //List<Quiz> cachedEntries = (List<Quiz>) InternalStorage.readObject(this, "Quiz");
+            //for (Quiz quiz : cachedEntries) {
+              //  quizzes.add(quiz);
+            //}
+            final Quiz cachedEntry = (Quiz)InternalStorage.readObject(this, "Quiz");
+            cachedEntry.current = 0;
+
 
             String[] values = {cachedEntry.quizName};
             Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
@@ -48,6 +58,15 @@ public class PastQuizzesActivity extends ActionBarActivity {
                     new int[] {android.R.id.text1,
                             android.R.id.text2});
             listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
+                    intent.putExtra("quiz", cachedEntry);
+                    startActivityForResult(intent,0);
+                }
+            });
 
 
         } catch (IOException e) {

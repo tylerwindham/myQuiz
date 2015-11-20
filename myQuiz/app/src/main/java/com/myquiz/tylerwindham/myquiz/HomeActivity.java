@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +17,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import mehdi.sakout.fancybuttons.FancyButton;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.model.File;
+
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -60,8 +70,7 @@ public class HomeActivity extends ActionBarActivity {
         FancyButton pastQuiz = (FancyButton) findViewById(R.id.pastQuizzesButton);
         pastQuiz.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
 
-        Parser parser = new Parser();
-        parser.getFile(getApplicationContext());
+
         SharedPreferences settings = getSharedPreferences(Preferences.PREFS_NAME, 0); // 0 - for private mode
         SharedPreferences.Editor editor = settings.edit();
 
@@ -73,24 +82,57 @@ public class HomeActivity extends ActionBarActivity {
 
         String username = getIntent().getStringExtra("username");
         Log.d("USERNAME", username);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-        takeQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), QuestionActivity.class);
-                startActivityForResult(intent,0);
+        StrictMode.setThreadPolicy(policy);
 
-            }
-        });
+        try {
+            // Create a URL for the desired page
+            URL url = new URL("http://students.cse.tamu.edu/iks5005/");
 
-        pastQuiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PastQuizzesActivity.class);
-                startActivityForResult(intent,0);
+            // Read all the text returned by the server
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String str = org.apache.commons.io.IOUtils.toString(in);
+            Log.d("FILE", str);
 
-            }
-        });;
+            Parser parser = new Parser();
+            final Quiz quiz = parser.getQuiz(str);
+
+
+            takeQuiz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), QuestionActivity.class);
+                    intent.putExtra("quiz", quiz);
+                    startActivityForResult(intent,0);
+
+                }
+            });
+
+            pastQuiz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), PastQuizzesActivity.class);
+                    startActivityForResult(intent,0);
+
+                }
+            });;
+
+
+
+
+
+        } catch (MalformedURLException e) {
+        } catch (IOException e) {
+        }
+
+
+
+
+
+
+
+
 
 
     }
