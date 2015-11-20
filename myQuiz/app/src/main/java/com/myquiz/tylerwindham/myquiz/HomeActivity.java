@@ -1,12 +1,15 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mehdi.sakout.fancybuttons.FancyButton;
+
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -125,5 +129,21 @@ public class HomeActivity extends ActionBarActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+//    class task extends AsyncTask<String, String, Void> {
+//        private ProgressDialog progDialog = new ProgressDialog(HomeActivity.this);
+//        InputStream is = null;
+//        String result = "";
+//        protected void onPreExecute(){
+//            progDialog.setMessage("Fetching data...");
+//            progDialog.show();
+//            progDialog.setOnCancelListener(new DialogInterface.OnCancelListener()) {
+//                @Override
+//                public void onCancel(DialogInterface) {
+//                    task.this.cancel(true);
+//                }
+//            });
+//        }
+//    }
 
 }

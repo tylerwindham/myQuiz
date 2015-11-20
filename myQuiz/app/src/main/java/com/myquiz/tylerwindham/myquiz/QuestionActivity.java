@@ -51,9 +51,6 @@ public class QuestionActivity extends ActionBarActivity {
         quizQuestions.quizName = "Quiz 1";
         return quizQuestions;
     }
-    public int getNums(){
-        return getQuizQs().size();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
