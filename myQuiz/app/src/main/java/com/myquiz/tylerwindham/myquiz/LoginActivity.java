@@ -56,6 +56,7 @@ public class LoginActivity extends ActionBarActivity {
                 if (username.length() == 0 || password.length() == 0){
                     Toast toast = Toast.makeText(getApplicationContext(), "Must provide credentials", Toast.LENGTH_SHORT);
                     toast.show();
+                    return;
                 }
 
                 Intent intent = new Intent(v.getContext(), HomeActivity.class);

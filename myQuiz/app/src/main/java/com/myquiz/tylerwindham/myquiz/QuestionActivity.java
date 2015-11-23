@@ -21,7 +21,7 @@ import java.util.List;
 
 public class QuestionActivity extends ActionBarActivity {
 
-    public Quiz getQuizQs(){
+    /*public Quiz getQuizQs(){
         String q = "What is the capitol of Thailand?";
         List<String> answers = new ArrayList<>();
         answers.add("China");
@@ -53,7 +53,7 @@ public class QuestionActivity extends ActionBarActivity {
         final Quiz quizQuestions = new Quiz(questions);
         quizQuestions.quizName = "Quiz 1";
         return quizQuestions;
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

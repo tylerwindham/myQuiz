@@ -30,10 +30,8 @@ public class ScoreActivity extends ActionBarActivity {
     Quiz quiz;
     QuestionActivity q = new QuestionActivity();
 
-    public Quiz quiz(){ return q.getQuizQs(); }
-    public String correctAnswer(int index){
-        return quiz().getQuestion(index).getAnswer();
-    }
+    //public Quiz quiz(){ return q.getQuizQs(); }
+    public String correctAnswer(int index){ return quiz.getQuestion(index).getAnswer(); }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
