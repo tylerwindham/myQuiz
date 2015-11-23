@@ -7,6 +7,10 @@ public class PostReqEx {
 
   public void sendReq(String url,String email,String fname){
     HttpClient httpClient = new HttpClient();
+    // url = students.cse.tamu.edu/iks5005/form_submit.html
+    // String text_to_input = "test string to input";
+    // postMethod.addParameter("textinput", text_to_input);
+    // 
     PostMethod postMethod = new PostMethod(url);
     postMethod.addParameter("Email", email);
     postMethod.addParameter("fname", fname);
