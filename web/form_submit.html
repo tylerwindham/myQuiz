@@ -1,0 +1,53 @@
+<HTML>
+
+<HEAD>
+<!--script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.min.js"></script-->
+<script src="iks5005/ajax.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<form></form>
+</HEAD>
+
+	
+
+<BODY>
+
+<form>
+<div id="submitbox">
+		<input type = "text" id = "textinput" />
+		<input type = "button" id = "subbut" value = "submit"/>
+		<!--a href = "Javascript:void(0)" onclick = "document.forms['myform'].submit();">Send</a-->
+</div>
+</form>
+
+<SCRIPT>
+
+	$(document).ready(function(){
+	//alert(" there ");
+		$("#subbut").click(function(){
+			//alert("first");
+			var datastring = document.getElementById("textinput").value;
+			//alert(datastring);
+			//var datastring = ;
+			//alert(" here ");
+			$.ajax({
+				url: 'formsubmit.php',
+				data: {'datastring' : datastring},
+				type: 'POST',
+				success: function(echo){
+					
+					alert(echo);
+				},
+				error: function(){
+					alert("ERROR : CONNECTION TO SERVER FAILED")
+				},
+			});
+		}); 
+		
+	});
+
+
+</SCRIPT>
+
+</BODY>
+
+</HTML>
