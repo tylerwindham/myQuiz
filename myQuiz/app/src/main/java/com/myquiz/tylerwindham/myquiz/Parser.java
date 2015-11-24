@@ -50,6 +50,7 @@ public class Parser extends Activity {
             String question = new String();
             String answer = new String();
             List<String> answers = new ArrayList<String>();
+            String quizName = "";
 
             for (int i = 0; i < quizList.size(); ++i) {
                 char temp = quizList.elementAt(i).charAt(0);
@@ -78,6 +79,9 @@ public class Parser extends Activity {
                         questionList.add(nextQ);
                         answers.clear();
                         break;
+                    case '*':
+                        quizName = quizList.elementAt(i).substring(1);
+                        break;
                     default:
                         break;
                 }
@@ -85,7 +89,7 @@ public class Parser extends Activity {
             Log.i("parse class", questionList.elementAt(0).question);
             Log.i("parse class", questionList.elementAt(1).question);
             Quiz quiz2 = new Quiz(questionList);
-
+            quiz2.quizName = quizName;
             return quiz2;
 
         } catch (IOException e) {

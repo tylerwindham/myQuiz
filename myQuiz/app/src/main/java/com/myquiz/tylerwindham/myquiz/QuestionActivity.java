@@ -51,7 +51,7 @@ public class QuestionActivity extends ActionBarActivity {
         Log.d("TEST", "TEST");
 
         final Quiz quizQuestions = new Quiz(questions);
-        quizQuestions.quizName = "Quiz 1";
+        //quizQuestions.quizName = "Quiz 1";
         return quizQuestions;
     }*/
 
@@ -62,6 +62,13 @@ public class QuestionActivity extends ActionBarActivity {
 
         final TextView question = (TextView) findViewById(R.id.question);
         final TextView score = (TextView) findViewById(R.id.score);
+        List<Quiz> quizzes = new ArrayList<Quiz>();
+        try{
+            InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
          /*
         String q = "What is the capitol of Thailand?";
         List<String> answers = new ArrayList<>();
@@ -95,7 +102,7 @@ public class QuestionActivity extends ActionBarActivity {
         */
 
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
-        quiz.quizName = "Quiz1";
+        //quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
             final Question ques = quiz.getQuestion(0);
@@ -120,9 +127,15 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                //Use this to store list so that all quizzes can be stored
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
                                 e.printStackTrace();
+                            } catch (ClassNotFoundException e){
+                                //e.printStackTrace();
                             }
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("quizObj", quiz);
@@ -153,8 +166,14 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            }catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -195,8 +214,14 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -228,8 +253,13 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -269,8 +299,13 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -302,8 +337,14 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -343,8 +384,15 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                //Get the current Quiz Vector that holds quizzes and add to quiz. Write the quiz vector
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -377,8 +425,14 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
@@ -421,8 +475,14 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 
@@ -455,8 +515,15 @@ public class QuestionActivity extends ActionBarActivity {
                             toast.show();
 
                             try {
-                                InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
+
+                                List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
+                                quizzes.add(quiz);
+                                InternalStorage.writeObject(getApplicationContext(), "Quiz", quizzes);
+
+                                //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (ClassNotFoundException e){
                                 e.printStackTrace();
                             }
 

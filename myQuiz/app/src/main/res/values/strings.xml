@@ -15,5 +15,7 @@
     <string name="title_activity_past_quizzes">PastQuizzesActivity</string>
     <string name="quizzes">Quizzes</string>
     <string name="title_activity_login">LoginActivity</string>
-
+    <string name="title_activity_get_quiz">GetQuizActivity</string>
+    <string name="get_quiz">Get Quiz</string>
+    <string name="default_quiz">http://people.tamu.edu/~almeagher/app/test.txt</string>
 </resources>

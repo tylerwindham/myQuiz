@@ -36,21 +36,35 @@ public class PastQuizzesActivity extends ActionBarActivity {
             //for (Quiz quiz : cachedEntries) {
               //  quizzes.add(quiz);
             //}
-            final Quiz cachedEntry = (Quiz)InternalStorage.readObject(this, "Quiz");
-            cachedEntry.current = 0;
+            final List<Quiz> cachedEntry = (List<Quiz>) InternalStorage.readObject(this, "Quizzes");
+            //cachedEntry.current = 0;
+            //cachedEntry.correctCount = 0;
+            //cachedEntry.score = 0;
+            String [] values = new String[20];
+            for(int i=0; i < cachedEntry.size(); ++i){
+                values[i] = cachedEntry.get(i).quizName;
+                cachedEntry.get(i).current = 0;
+                cachedEntry.get(i).correctCount = 0;
+                //cachedEntry.get(i).score = 0;
 
+            }
 
-            String[] values = {cachedEntry.quizName};
-            Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
+            //String[] values = {cachedEntry.quizName};
+            //Log.d("QUIZZZZZZZ!!@#E!@#", cachedEntry.quizName);
             //ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
             //listView.setAdapter(codeLearnArrayAdapter);
 
             List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
                 Map<String, String> datum = new HashMap<String, String>(2);
-                datum.put("name", cachedEntry.quizName);
-                datum.put("score", "Score: " + String.valueOf(cachedEntry.score));
-                data.add(datum);
+                for(int i=0; i < cachedEntry.size(); ++i){
+                    datum.put("name", cachedEntry.get(i).quizName);
+                    datum.put("score", "Score: " + String.valueOf(cachedEntry.get(i).score));
+                    data.add(datum);
+                }
+                //datum.put("name", cachedEntry.quizName);
+                //datum.put("score", "Score: " + String.valueOf(cachedEntry.score));
+                //data.add(datum);
 
             SimpleAdapter adapter = new SimpleAdapter(this, data,
                     android.R.layout.simple_list_item_2,
@@ -62,8 +76,11 @@ public class PastQuizzesActivity extends ActionBarActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                     Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
-                    intent.putExtra("quiz", cachedEntry);
+                    Quiz q = cachedEntry.get(position);
+                    q.score = 0;
+                    intent.putExtra("quiz", q);
                     startActivityForResult(intent,0);
                 }
             });

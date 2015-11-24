@@ -109,9 +109,13 @@ public class HomeActivity extends ActionBarActivity {
             takeQuiz.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), QuestionActivity.class);
-                    intent.putExtra("quiz", quiz);
+                   // Intent intent = new Intent(v.getContext(), QuestionActivity.class);
+                   // intent.putExtra("quiz", quiz);
+                   // startActivityForResult(intent,0);
+
+                    Intent intent = new Intent(v.getContext(), GetQuizActivity.class);
                     startActivityForResult(intent,0);
+
 
                 }
             });
