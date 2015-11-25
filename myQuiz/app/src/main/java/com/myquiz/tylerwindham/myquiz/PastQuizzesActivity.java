@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ public class PastQuizzesActivity extends ActionBarActivity {
               //  quizzes.add(quiz);
             //}
             final List<Quiz> cachedEntry = (List<Quiz>) InternalStorage.readObject(this, "Quizzes");
+            Log.d("TEMP", "TEMP");
             //cachedEntry.current = 0;
             //cachedEntry.correctCount = 0;
             //cachedEntry.score = 0;
@@ -56,8 +58,11 @@ public class PastQuizzesActivity extends ActionBarActivity {
 
             List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
-                Map<String, String> datum = new HashMap<String, String>(2);
+
                 for(int i=0; i < cachedEntry.size(); ++i){
+                    Map<String, String> datum = new HashMap<String, String>(2);
+
+
                     datum.put("name", cachedEntry.get(i).quizName);
                     datum.put("score", "Score: " + String.valueOf(cachedEntry.get(i).score));
                     data.add(datum);
@@ -71,7 +76,10 @@ public class PastQuizzesActivity extends ActionBarActivity {
                     new String[] {"name", "score"},
                     new int[] {android.R.id.text1,
                             android.R.id.text2});
+
+
             listView.setAdapter(adapter);
+
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

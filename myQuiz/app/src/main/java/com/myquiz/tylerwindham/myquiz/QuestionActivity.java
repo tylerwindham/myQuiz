@@ -64,8 +64,15 @@ public class QuestionActivity extends ActionBarActivity {
         final TextView score = (TextView) findViewById(R.id.score);
         List<Quiz> quizzes = new ArrayList<Quiz>();
         try{
-            InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+            List<Quiz> temp = (List<Quiz>) InternalStorage.readObject(getApplicationContext(),"Quizzes");
+            if(temp.size() == 0){
+                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+            }
+
+
         }catch (IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -129,8 +136,13 @@ public class QuestionActivity extends ActionBarActivity {
                             try {
                                 //Use this to store list so that all quizzes can be stored
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                    Log.d("ADDINGQUIZ", "QUIZ WAS ADDED");
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -149,7 +161,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
@@ -167,8 +179,13 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
+
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -191,7 +208,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
                         }
@@ -215,8 +232,14 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
+
+
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -237,7 +260,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
@@ -254,8 +277,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -275,7 +302,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
                         }
@@ -300,8 +327,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -321,7 +352,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
@@ -338,8 +369,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -361,7 +396,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
                         }
@@ -386,8 +421,12 @@ public class QuestionActivity extends ActionBarActivity {
                             try {
                                 //Get the current Quiz Vector that holds quizzes and add to quiz. Write the quiz vector
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -408,7 +447,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
@@ -426,8 +465,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -447,7 +490,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
                         }
@@ -476,8 +519,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -498,7 +545,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
@@ -517,8 +564,12 @@ public class QuestionActivity extends ActionBarActivity {
                             try {
 
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
-                                quizzes.add(quiz);
-                                InternalStorage.writeObject(getApplicationContext(), "Quiz", quizzes);
+                                if(!doesQuizExist(quizzes, quiz)){
+                                    quizzes.add(quiz);
+                                    InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                                }else{
+                                    Log.d("TAG", "QUIZ ALREADY EXISTS");
+                                }
 
                                 //InternalStorage.writeObject(getApplicationContext(),"Quiz", quiz);
                             } catch (IOException e) {
@@ -539,7 +590,7 @@ public class QuestionActivity extends ActionBarActivity {
                             ques.question = quiz.questionList.get(quiz.current).question;
                             ques.answers = quiz.questionList.get(quiz.current).answers;
                             question.setText(quiz.questionList.get(quiz.current).question);
-                            score.setText("Score: " + quiz.score);
+                            score.setText("Score: " + String.format("%.2f", quiz.score));
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
                         }
@@ -596,6 +647,18 @@ public class QuestionActivity extends ActionBarActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    public boolean doesQuizExist(List<Quiz> quizzes, Quiz quiz ){
+        boolean isInList = false;
+        for(int i=0; i < quizzes.size(); ++i){
+            if(quizzes.get(i).quizName.equals(quiz.quizName)){
+                isInList = true;
+                return isInList;
+            }
+        }
+
+        return isInList;
     }
 
  }
