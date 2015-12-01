@@ -1,40 +1,27 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-
-import android.os.StrictMode;
-
-import android.os.AsyncTask;
-
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import mehdi.sakout.fancybuttons.FancyButton;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.model.File;
+//import com.google.api.services.drive.Drive;
+//mport com.google.api.services.drive.model.File;
 
 
 

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoMange(this,this)
+                .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -109,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void signOut() {
-        Auth.Google.SignIn.Api.signOut(mGoogleApiClient).setResultCallback(
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(Status status) {
@@ -122,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
-                    void onResult(Status status) {
+                    public void onResult(Status status) {
                         updateUI(false);
                     }
                 });
@@ -144,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()()) {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }
     }
