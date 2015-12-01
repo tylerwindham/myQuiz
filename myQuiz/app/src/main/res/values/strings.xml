@@ -19,6 +19,7 @@
     <string name="get_quiz">Get Quiz</string>
     <string name="default_quiz">http://people.tamu.edu/~almeagher/app/test.txt</string>
 
+    <string name="title_text">Google Sign-In</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="signed_in">Signed in</string>
     <string name="signing_in">Signing in…</string>
@@ -45,6 +46,4 @@
     <string name="desc_id_token_activity">Retrieving an ID Token for the user.</string>
     <string name="desc_auth_code_activity">Demonstrate retrieving an auth code for authorizing your server.</string>
     <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
-
-    <color name="white">#FFFFFF</color>
 </resources>
