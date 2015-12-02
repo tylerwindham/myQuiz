@@ -18,4 +18,5 @@
     <string name="title_activity_get_quiz">GetQuizActivity</string>
     <string name="get_quiz">Get Quiz</string>
     <string name="default_quiz">http://people.tamu.edu/~almeagher/app/test.txt</string>
+    <string name="delete_quiz">Delete</string>
 </resources>

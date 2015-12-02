@@ -66,12 +66,21 @@ public class QuestionActivity extends ActionBarActivity {
         try{
             List<Quiz> temp = (List<Quiz>) InternalStorage.readObject(getApplicationContext(),"Quizzes");
             if(temp.size() == 0){
+                Log.d("WRITE", "ABOUT TO WRITE");
                 InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                Log.d("WRITE", "WRITING COMPLETE");
             }
 
 
         }catch (IOException e){
             e.printStackTrace();
+            Log.d("WRITE", "ABOUT TO WRITE");
+            try {
+                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Log.d("WRITE", "WRITING COMPLETE");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -112,7 +121,8 @@ public class QuestionActivity extends ActionBarActivity {
         //quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
-            final Question ques = quiz.getQuestion(0);
+            final Question ques = quiz.getQuestion(quiz.current);
+            setTitle("Question " + Integer.toString(quiz.current+1));
 
             final Button aButton = (Button) findViewById(R.id.aButton);
             final Button bButton = (Button) findViewById(R.id.bButton);
@@ -155,6 +165,7 @@ public class QuestionActivity extends ActionBarActivity {
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -203,6 +214,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -254,6 +266,7 @@ public class QuestionActivity extends ActionBarActivity {
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -297,6 +310,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -346,6 +360,7 @@ public class QuestionActivity extends ActionBarActivity {
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -391,6 +406,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -441,6 +457,7 @@ public class QuestionActivity extends ActionBarActivity {
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -485,6 +502,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -539,6 +557,7 @@ public class QuestionActivity extends ActionBarActivity {
                             startActivityForResult(intent, 0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -585,6 +604,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;

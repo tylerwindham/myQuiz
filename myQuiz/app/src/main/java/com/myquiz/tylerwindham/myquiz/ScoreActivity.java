@@ -37,6 +37,7 @@ public class ScoreActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
+        setTitle("Results");
         index = 0;
         TextView scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         TextView numericScore = (TextView) findViewById(R.id.numericScore);
