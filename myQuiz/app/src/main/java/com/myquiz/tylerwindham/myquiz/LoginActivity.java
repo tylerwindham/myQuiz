@@ -43,23 +43,28 @@ public class LoginActivity extends AppCompatActivity implements
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.disconnect_button).setOnClickListener(this);
+        findViewById(R.id.quizzes_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+        // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+        // and the GoogleSignInResult will be available instantly
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             Log.d(TAG, "Got cached sign-in");
@@ -67,6 +72,9 @@ public class LoginActivity extends AppCompatActivity implements
             handleSignInResult(result);
         }
         else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
             showProgressDialog();
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
@@ -116,6 +124,10 @@ public class LoginActivity extends AppCompatActivity implements
                 });
     }
 
+    private void goToQuizzes(Intent i) {
+        startActivityForResult(i, 0);
+    }
+
     private void revokeAccess() {
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
@@ -152,9 +164,11 @@ public class LoginActivity extends AppCompatActivity implements
 
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            findViewById(R.id.quizzes_button).setVisibility(View.VISIBLE);
         } else {
             mStatusTextView.setText(R.string.signed_out);
 
+            findViewById(R.id.quizzes_button).setVisibility(View.GONE);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
@@ -171,6 +185,10 @@ public class LoginActivity extends AppCompatActivity implements
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
+                break;
+            case R.id.quizzes_button:
+                Intent intent = new Intent(v.getContext(), PastQuizzesActivity.class);
+                goToQuizzes(intent);
                 break;
         }
     }

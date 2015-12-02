@@ -42,6 +42,13 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quizzes"
+            android:id="@+id/quizzes_button"
+            android:layout_gravity="center_horizontal" />
+
         <TextView
             android:id="@+id/detail"
             android:layout_width="wrap_content"

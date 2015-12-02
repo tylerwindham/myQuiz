@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -32,29 +31,6 @@ public class HomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //THE ATTEMPT THAT CALLS PARSE CLASS
-        //Parser tester = new Parser();
-        //HomeActivity.context = getApplicationContext();
-        //tester.getFile(context);
-
-        /*TRIED DOING IT STRAIGHT UP HERE INSTEAD
-        AssetManager assetManager = getAssets();
-
-        InputStream input;
-        try {
-            input = assetManager.open("test.txt");
-            int size = input.available();
-            byte[] buffer = new byte[size];
-            input.read(buffer);
-            input.close();
-            String text = new String(buffer);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        //Log.d("INSIDE HOME ACTIVITY", "BBBBBBBBBBB");
         setContentView(R.layout.activity_home);
         ActionBar bar = getActionBar();
 
@@ -74,11 +50,11 @@ public class HomeActivity extends ActionBarActivity {
 // Commit the edits!
         editor.commit();
 
-        String username = getIntent().getStringExtra("username");
-        Log.d("USERNAME", username);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //String username = getIntent().getStringExtra("username");
+        //Log.d("USERNAME", username);
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-        StrictMode.setThreadPolicy(policy);
+        //StrictMode.setThreadPolicy(policy);
 
         try {
             // Create a URL for the desired page
