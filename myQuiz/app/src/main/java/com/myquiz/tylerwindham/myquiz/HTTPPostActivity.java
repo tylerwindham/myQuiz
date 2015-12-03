@@ -72,7 +72,7 @@ public class HTTPPostActivity extends Activity {
             output += questions.elementAt(i) + '\n';
         }
 
-         
+
 
         nameValuePair.add(new BasicNameValuePair("datastring", output));
         //nameValuePair.add(new BasicNameValuePair("submitbox", " HERE THERE EV"));

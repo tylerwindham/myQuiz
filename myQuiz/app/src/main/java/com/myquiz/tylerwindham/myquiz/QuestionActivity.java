@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class QuestionActivity extends ActionBarActivity {
 
@@ -118,6 +119,17 @@ public class QuestionActivity extends ActionBarActivity {
         */
 
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+
+        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+        final String qName = quiz.quizName;
+        final String uName; // need this
+        final Vector<Vector<String>> uAnswers;
+        // uAnswers.elementAt(0) == user answer
+        // uAnswers.elementAt(1) == correct answer 
+        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+
+
+
         //quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
