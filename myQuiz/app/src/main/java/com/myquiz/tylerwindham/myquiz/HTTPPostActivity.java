@@ -88,7 +88,7 @@ public class HTTPPostActivity extends Activity {
 
     public void makeQuizPost(/* need input of variables for quiz */) {
         // either individual question or all questions
-
+        // test
         Log.d("here ", "and here ");
         HttpClient httpClient = new DefaultHttpClient();
         // replace with your url
