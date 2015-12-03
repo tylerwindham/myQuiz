@@ -55,19 +55,21 @@ public class getQuizResults {
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.charAt(0) == '*'){
                     String qName = line.substring(1);
-                    String userName = "";
-                    line = bufferedReader.readLine();
-                    if(line.charAt(0) == 'U') {
-                        userName = line.substring(1);
+                    if(qName == quizName) {
+                        String userName = "";
+                        line = bufferedReader.readLine();
+                        if (line.charAt(0) == 'U') {
+                            userName = line.substring(1);
+                        }
+                        resultTable restable = new resultTable(qName, userName);
+                        while ((line = bufferedReader.readLine()) != null && line.charAt(0) != '*') {
+                            String questlab = line.substring(0, 2);
+                            String userAns = line.substring(2, 2);
+                            String actualAns = line.substring(4, 4);
+                            restable.addQuest(questlab, userAns, actualAns);
+                        }
+                        totTable.add(restable);
                     }
-                    resultTable restable = new resultTable(qName,userName);
-                    while((line = bufferedReader.readLine()) != null && line.charAt(0) != '*') {
-                        String questlab = line.substring(0,2);
-                        String userAns = line.substring(2, 2);
-                        String actualAns = line.substring(4, 4);
-                        restable.addQuest(questlab, userAns, actualAns);
-                    }
-                    totTable.add(restable);
                 }
 
                 //Log.i("buffer reader", line);
