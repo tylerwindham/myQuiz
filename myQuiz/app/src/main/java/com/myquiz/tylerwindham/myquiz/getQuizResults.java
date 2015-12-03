@@ -27,30 +27,8 @@ public class getQuizResults {
         //String urlString = urlField.getText().toString();
         //Log.d("URL", urlString);
         //URL url = new URL(urlString);
-    void getResults(String quizName) {
-        try {
-            URL url = new URL("http://students.cse.tamu.edu/iks5005/results.txt");
 
-            // Read all the text returned by the server
-            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-            String str = org.apache.commons.io.IOUtils.toString(in);
-            Log.d("FILE", str);
-
-            // resParser parser = new resParser();
-
-            // Intent intent = new Intent(v.getContext(), QuestionActivity.class);
-            // intent.putExtra("quiz", quiz);
-//                   / finish();
-            //startActivityForResult(intent, 0);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (java.io.IOException e){
-            e.printStackTrace();
-        }
-
-    }
-
-    void getResults_new(String quizName){
+    void getResults(String quizName){
 
         //Vector<String> quizList = new Vector<String>();
         //Vector<Question> questionList = new Vector<Question>();
@@ -59,17 +37,33 @@ public class getQuizResults {
 
         Quiz quiz;
         String line;
-        Vector<String> lines = new Vector<String>();
+        Vector<resultTable> totTable = new Vector<resultTable>();
 
         try {
             //InputStream in = IOUtils.toInputStream(file, "UTF-8");
             InputStreamReader streamReader = new InputStreamReader(in);
             BufferedReader bufferedReader = new BufferedReader(streamReader);
 
-            while ((line = bufferedReader.readLine()) != null) {
 
-                quizList.add(line);
-                Log.i("buffer reader", line);
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.charAt(0) == '*'){
+                    String qName = line.substring(1);
+                    String userName = "";
+                    line = bufferedReader.readLine();
+                    if(line.charAt(0) == 'U') {
+                        userName = line.substring(1);
+                    }
+                    resultTable restable = new resultTable(qName,userName);
+                    while((line = bufferedReader.readLine()) != null && line.charAt(0) != '*') {
+                        String questlab = line.substring(0,2);
+                        String userAns = line.substring(2, 2);
+                        String actualAns = line.substring(4, 4);
+                        restable.addQuest(questlab, userAns, actualAns);
+                    }
+                    totTable.add(restable);
+                }
+
+                //Log.i("buffer reader", line);
             }
 
             bufferedReader.close();
