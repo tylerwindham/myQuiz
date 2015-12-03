@@ -43,49 +43,8 @@ public class HTTPPostActivity extends Activity {
         //makePostRequest();
 
     }
-    public void makePostRequest() {
-
-        Log.d("here ", "and here ");
-        HttpClient httpClient = new DefaultHttpClient();
-        // replace with your url
-        HttpPost httpPost = new HttpPost("http://students.cse.tamu.edu/iks5005/formsubmit.php");
-
-
-        //Post Data
-        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(1);
-        nameValuePair.add(new BasicNameValuePair("datastring", "\n----- \n %%user_3 \n q1:a \n q2:b \n q3:c \n -------\n"));
-        //nameValuePair.add(new BasicNameValuePair("submitbox", " HERE THERE EV"));
-
-
-        //Encoding POST data
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-        } catch (UnsupportedEncodingException e) {
-            // log exception
-            Log.d("cat.1", "cat.1");
-            e.printStackTrace();
-        }
-
-        //making POST request.
-        try {
-            HttpResponse response = httpClient.execute(httpPost);
-            // write response to log
-            Log.d("Http Post Response:", response.toString());
-        } catch (ClientProtocolException e) {
-            // Log exception
-            Log.d("cat.2", "cat.2 ");
-            e.printStackTrace();
-        } catch (IOException e) {
-            // Log exception
-            Log.d("cat.3 ", " cat.3 ");
-            e.printStackTrace();
-        }
-
-    }
-
-
-
-
+    
+    // for quiz app
     public void makeQuizPost(/* need input of variables for quiz */) {
         // either individual question or all questions
         // test
@@ -144,5 +103,51 @@ public class HTTPPostActivity extends Activity {
         }
 
     }
+    
+    // test function for standalone use
+    /*public void makePostRequest() {
+
+        Log.d("here ", "and here ");
+        HttpClient httpClient = new DefaultHttpClient();
+        // replace with your url
+        HttpPost httpPost = new HttpPost("http://students.cse.tamu.edu/iks5005/formsubmit.php");
+
+
+        //Post Data
+        List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(1);
+        nameValuePair.add(new BasicNameValuePair("datastring", "\n----- \n %%user_3 \n q1:a \n q2:b \n q3:c \n -------\n"));
+        //nameValuePair.add(new BasicNameValuePair("submitbox", " HERE THERE EV"));
+
+
+        //Encoding POST data
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+        } catch (UnsupportedEncodingException e) {
+            // log exception
+            Log.d("cat.1", "cat.1");
+            e.printStackTrace();
+        }
+
+        //making POST request.
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+            // write response to log
+            Log.d("Http Post Response:", response.toString());
+        } catch (ClientProtocolException e) {
+            // Log exception
+            Log.d("cat.2", "cat.2 ");
+            e.printStackTrace();
+        } catch (IOException e) {
+            // Log exception
+            Log.d("cat.3 ", " cat.3 ");
+            e.printStackTrace();
+        }
+
+    } */
+
+
+
+
+    
 
 }
