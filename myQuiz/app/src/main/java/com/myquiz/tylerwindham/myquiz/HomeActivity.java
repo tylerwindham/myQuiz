@@ -11,6 +11,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.os.StrictMode;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +32,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 
 public class HomeActivity extends ActionBarActivity {
+
+    private GoogleApiClient mGoogleApiClient;
 
     private static Context context;
     @Override
@@ -52,9 +61,8 @@ public class HomeActivity extends ActionBarActivity {
 
         //String username = getIntent().getStringExtra("username");
         //Log.d("USERNAME", username);
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        //StrictMode.setThreadPolicy(policy);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         try {
             // Create a URL for the desired page
@@ -93,21 +101,9 @@ public class HomeActivity extends ActionBarActivity {
             });;
 
 
-
-
-
         } catch (MalformedURLException e) {
         } catch (IOException e) {
         }
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -129,6 +125,11 @@ public class HomeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if (id == R.id.sign_out) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, 0);
         }
 
         return super.onOptionsItemSelected(item);

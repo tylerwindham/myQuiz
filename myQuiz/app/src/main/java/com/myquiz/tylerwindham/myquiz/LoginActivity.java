@@ -102,7 +102,10 @@ public class LoginActivity extends AppCompatActivity implements
             //Sign in was succesful, so show authenticated UI
             GoogleSignInAccount acct = result.getSignInAccount();
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-            updateUI(true);
+            //updateUI(true);
+
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivityForResult(intent,0);
         } else {
             //Signed out, show unauthenticated UI
             updateUI(false);
@@ -187,8 +190,8 @@ public class LoginActivity extends AppCompatActivity implements
                 revokeAccess();
                 break;
             case R.id.quizzes_button:
-                Intent intent = new Intent(v.getContext(), PastQuizzesActivity.class);
-                goToQuizzes(intent);
+                //Intent intent = new Intent(v.getContext(), HomeActivity.class);
+                //goToQuizzes(intent);
                 break;
         }
     }

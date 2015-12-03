@@ -21,40 +21,6 @@ import java.util.List;
 
 public class QuestionActivity extends ActionBarActivity {
 
-    /*public Quiz getQuizQs(){
-        String q = "What is the capitol of Thailand?";
-        List<String> answers = new ArrayList<>();
-        answers.add("China");
-        answers.add("Bangcock");
-        answers.add("Texas");
-        answers.add("Bombay");
-        answers.add("Hamburg");
-        final String answer = "B";
-        final Question ques = new Question(q, answer, answers);
-
-        String q2 = "What is the capitol of Texas?";
-        List<String> answers2 = new ArrayList<>();
-        answers2.add("Austin");
-        answers2.add("Houston");
-        answers2.add("Dallas");
-        answers2.add("San Antonio");
-        answers2.add("Amarillo");
-
-        final String answer2 = "A";
-
-        final Question ques2 = new Question(q2, answer2, answers2);
-
-        List<Question> questions = new ArrayList<Question>();
-        questions.add(ques);
-        questions.add(ques2);
-
-        Log.d("TEST", "TEST");
-
-        final Quiz quizQuestions = new Quiz(questions);
-        //quizQuestions.quizName = "Quiz 1";
-        return quizQuestions;
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,38 +41,6 @@ public class QuestionActivity extends ActionBarActivity {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-         /*
-        String q = "What is the capitol of Thailand?";
-        List<String> answers = new ArrayList<>();
-        answers.add("China");
-        answers.add("Bangcock");
-        answers.add("Texas");
-        answers.add("Bombay");
-        answers.add("Hamburg");
-        final String answer = "B";
-        final Question ques = new Question(q, answer, answers);
-
-        String q2 = "What is the capitol of Texas?";
-        List<String> answers2 = new ArrayList<>();
-        answers2.add("Austin");
-        answers2.add("Houston");
-        answers2.add("Dallas");
-        answers2.add("San Antonio");
-        answers2.add("Amarillo");
-
-        final String answer2 = "A";
-
-        final Question ques2 = new Question(q2, answer2, answers2);
-
-        List<Question> questions = new ArrayList<Question>();
-        questions.add(ques);
-        questions.add(ques2);
-
-        final Quiz quiz = new Quiz(questions);
-        quiz.quizName = "Quiz 1";
-
-        */
 
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
         //quiz.quizName = "Quiz1";
