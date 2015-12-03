@@ -1,14 +1,20 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -27,15 +33,18 @@ public class PastQuizzesActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_quizzes);
-        ListView listView = (ListView) findViewById(R.id.quizzes);
-      //  ActionBar bar = getActionBar();
+        final ListView listView = (ListView) findViewById(R.id.quizzes);
+        // registerForContextMenu(listView);
+
+        setTitle("Past Quizzes");
+        //  ActionBar bar = getActionBar();
         //bar.setDisplayHomeAsUpEnabled(true);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         try {
             final List<Quiz> quizzes = new ArrayList<Quiz>();
             //List<Quiz> cachedEntries = (List<Quiz>) InternalStorage.readObject(this, "Quiz");
             //for (Quiz quiz : cachedEntries) {
-              //  quizzes.add(quiz);
+            //  quizzes.add(quiz);
             //}
             final List<Quiz> cachedEntry = (List<Quiz>) InternalStorage.readObject(this, "Quizzes");
             Log.d("TEMP", "TEMP");
@@ -59,19 +68,19 @@ public class PastQuizzesActivity extends ActionBarActivity {
             List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
 
-                for(int i=0; i < cachedEntry.size(); ++i){
-                    Map<String, String> datum = new HashMap<String, String>(2);
+            for(int i=0; i < cachedEntry.size(); ++i){
+                Map<String, String> datum = new HashMap<String, String>(2);
 
 
-                    datum.put("name", cachedEntry.get(i).quizName);
-                    datum.put("score", "Score: " + String.valueOf(cachedEntry.get(i).score));
-                    data.add(datum);
-                }
-                //datum.put("name", cachedEntry.quizName);
-                //datum.put("score", "Score: " + String.valueOf(cachedEntry.score));
-                //data.add(datum);
+                datum.put("name", cachedEntry.get(i).quizName);
+                datum.put("score", "Score: " + String.valueOf(cachedEntry.get(i).score));
+                data.add(datum);
+            }
+            //datum.put("name", cachedEntry.quizName);
+            //datum.put("score", "Score: " + String.valueOf(cachedEntry.score));
+            //data.add(datum);
 
-            SimpleAdapter adapter = new SimpleAdapter(this, data,
+            final SimpleAdapter adapter = new SimpleAdapter(this, data,
                     android.R.layout.simple_list_item_2,
                     new String[] {"name", "score"},
                     new int[] {android.R.id.text1,
@@ -92,6 +101,7 @@ public class PastQuizzesActivity extends ActionBarActivity {
                     startActivityForResult(intent,0);
                 }
             });
+
 
 
         } catch (IOException e) {
@@ -126,4 +136,11 @@ public class PastQuizzesActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+/*
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        this.getMenuInflater().inflate(R.menu.menu_past_quizzes, menu);
+    }
+*/
+
 }

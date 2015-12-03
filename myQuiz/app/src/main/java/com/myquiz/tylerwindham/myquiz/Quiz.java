@@ -17,19 +17,14 @@ public class Quiz implements Serializable{
     Quiz(List<Question> questions){
         this.questionList = questions;
     }
+
     int size(){
         return questionList.size();
-    }
-
-    List<Question> getQuestions(){
-        return questionList;
     }
 
     Question getQuestion(int i){
         return questionList.get(i);
     }
-
-    public void addCurrent(){ current++; }
 
     public String toString(){
         String a = "";
@@ -38,7 +33,5 @@ public class Quiz implements Serializable{
         }
         return a;
     }
-
-
 
 }
