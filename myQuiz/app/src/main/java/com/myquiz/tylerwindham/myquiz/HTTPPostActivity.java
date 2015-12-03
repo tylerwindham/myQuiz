@@ -45,7 +45,7 @@ public class HTTPPostActivity extends Activity {
     }
     
     // for quiz app
-    public void makeQuizPost(/* need input of variables for quiz */) {
+    public void makeQuizPost(String quiz_name, String user_name, Vector<Vector<String>> user_q_answers) {
         // either individual question or all questions
         // test
         Log.d("here ", "and here ");
@@ -61,18 +61,18 @@ public class HTTPPostActivity extends Activity {
         String qname = "*"; // + quizName
         String uname = "U"; // + userName
         Vector<String> questions = new Vector<String>();
-        /*
-        for(int i = 0; i < number_of_questions; i++){
-            questions.add("Q" + i + userAnswer + "?" + actualAnswer);
+
+        for(int i = 0; i < user_q_answers.size(); i++){
+            questions.add("Q" + i + user_q_answers.elementAt(i).elementAt(0) + "?" + user_q_answers.elementAt(i).elementAt(1));
         }
-         */
+
         String output = qname + '\n' + uname + '\n';
-        /*
+
         for(int i = 0; i < questions.size(); i++){
             output += questions.elementAt(i) + '\n';
         }
 
-         */
+         
 
         nameValuePair.add(new BasicNameValuePair("datastring", output));
         //nameValuePair.add(new BasicNameValuePair("submitbox", " HERE THERE EV"));
