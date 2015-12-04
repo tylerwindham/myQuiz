@@ -71,10 +71,6 @@ public class HomeActivity extends ActionBarActivity implements
         // Commit the edits!
         editor.commit();
 
-        // This is to acquire username from google acct
-        String username = getIntent().getStringExtra("username");
-        Log.d("USERNAME", username);
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 

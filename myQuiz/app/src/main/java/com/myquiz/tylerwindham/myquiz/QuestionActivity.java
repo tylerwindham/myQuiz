@@ -57,7 +57,8 @@ public class QuestionActivity extends ActionBarActivity {
         //#################################################
         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
         final String qName = quiz.quizName;
-        final String uName = "Bob"; // need this to be username
+        // This is to acquire username from google acct
+        final String uName = getIntent().getStringExtra("username");// need this to be username
         final Vector<Vector<String>> uAnswers = new Vector<Vector<String>>();
         final int PAUSE_CONTROL = 1000000;
         // uAnswers.elementAt(0) == user answer
