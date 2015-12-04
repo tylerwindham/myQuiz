@@ -77,6 +77,7 @@ public class ScoreActivity extends ActionBarActivity {
                     }
                     Intent intent = new Intent(v.getContext(), HomeActivity.class);
                     intent.putExtra("score", quiz.score);
+                    finish();
                     startActivityForResult(intent,0);
                 }else{
                     Log.d("CREATE", index+ "\n");
@@ -87,9 +88,9 @@ public class ScoreActivity extends ActionBarActivity {
                     chart.setData(new BarData(getXAxisValues(), getDataSet(index+1)));
                     chart.invalidate();
 
-                    if(index == quiz.questionList.size()-1){
-                        nextButton.setVisibility(View.GONE);
-                    }
+//                    if(index == quiz.questionList.size()-1){
+//                        nextButton.setVisibility(View.GONE);
+//                    }
                 }
             }
         });
