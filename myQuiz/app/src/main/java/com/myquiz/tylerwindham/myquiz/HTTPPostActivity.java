@@ -58,8 +58,8 @@ public class HTTPPostActivity extends Activity {
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(1);
 
         // create format for posting on page
-        String qname = "*"; // + quizName
-        String uname = "U"; // + userName
+        String qname = "*" + quiz_name; // + quizName
+        String uname = "U" + user_name; // + userName
         Vector<String> questions = new Vector<String>();
 
         for(int i = 0; i < user_q_answers.size(); i++){

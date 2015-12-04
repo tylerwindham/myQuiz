@@ -153,10 +153,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("a");
+                        resp.add("A");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                       // resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -220,10 +220,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("a");
+                        resp.add("A");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -295,10 +295,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("b");
+                        resp.add("B");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -362,10 +362,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("b");
+                        resp.add("B");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -430,10 +430,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("c");
+                        resp.add("C");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -494,10 +494,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("c");
+                        resp.add("C");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -565,10 +565,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("d");
+                        resp.add("D");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                       // resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -630,10 +630,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("d");
+                        resp.add("D");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -704,10 +704,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("e");
+                        resp.add("E");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                       // resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
@@ -769,10 +769,10 @@ public class QuestionActivity extends ActionBarActivity {
                         //#################################################
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         Vector<String> resp = new Vector<String>();
-                        resp.add("e");
+                        resp.add("E");
                         resp.add(ques.answer);
                         uAnswers.add(resp);
-                        resp.clear();
+                        //resp.clear();
                         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                         //#################################################
 
