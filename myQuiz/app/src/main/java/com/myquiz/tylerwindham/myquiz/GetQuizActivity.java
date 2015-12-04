@@ -1,6 +1,7 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,12 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -35,13 +41,77 @@ public class GetQuizActivity extends ActionBarActivity {
         setTitle("Download Quiz");
         Spinner spinner = (Spinner) findViewById(R.id.quizURL);
         String[] spinnerArray = new String[2];
+        //final Map<String, String> quizMap = new HashMap<String,String>();
+        //quizMap.put("Quiz1","http://people.tamu.edu/~almeagher/app/test.txt");
+        //quizMap.put("Quiz2","http://students.cse.tamu.edu/iks5005/");
+        //spinnerArray[0] = "Quiz1";
+        //spinnerArray[1] = "Quiz2";
+        final String[] quizMapString = new String[1];
+
+        final List<String[]> stringList = new ArrayList<String[]>();
+
+        String quizMapURL = "http://students.cse.tamu.edu/iks5005/quizPortal.txt";
+        URL url = null;
+        try {
+            url = new URL(quizMapURL);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // Read all the text returned by the server
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String str = org.apache.commons.io.IOUtils.toString(in);
+            quizMapString[0] = str;
+
+            List<String> postedQuizzes = new ArrayList<String>();
+
+            InputStream in2 = IOUtils.toInputStream(quizMapString[0], "UTF-8");
+            InputStreamReader streamReader = new InputStreamReader(in2);
+            BufferedReader bufferedReader = new BufferedReader(streamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+
+                postedQuizzes.add(line);
+                Log.i("buffer reader", line);
+            }
+            //stringList = new ArrayList<String[]>();
+            for(int i=0; i < postedQuizzes.size(); ++i){
+                String s = postedQuizzes.get(i);
+                String[] words = s.split("\\s+");
+
+
+                stringList.add(words);
+            }
+
+
+            Log.d("DEBUG", Integer.toString(stringList.size()));
+
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        List<String> spinnerArray2= new ArrayList<String>();
+
+        for(int i=0; i < stringList.size(); i++){
+            spinnerArray2.add(stringList.get(i)[0]);
+        }
+
         final Map<String, String> quizMap = new HashMap<String,String>();
-        quizMap.put("Quiz1","http://people.tamu.edu/~almeagher/app/test.txt");
-        quizMap.put("Quiz2","http://students.cse.tamu.edu/iks5005/");
-        spinnerArray[0] = "Quiz1";
-        spinnerArray[1] = "Quiz2";
+
+
+        for(int i=0; i < stringList.size(); ++i){
+            quizMap.put(stringList.get(i)[0], stringList.get(i)[1]);
+        }
+
+
+
         final String[] qn = new String[1];
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, spinnerArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, spinnerArray2);
         adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(adapter);
 
@@ -61,14 +131,15 @@ public class GetQuizActivity extends ActionBarActivity {
         //String quizName = spinner.getSelectedItem().toString();
         //String quizName = qn[0];
         //Log.d("QUIZNAME", quizName);
-       //final String urlString = quizMap.get(quizName);
+        //final String urlString = quizMap.get(quizName);
 
 
 
-       //final EditText urlField = (EditText) findViewById(R.id.quizURL);
+        //final EditText urlField = (EditText) findViewById(R.id.quizURL);
 
 
         FancyButton getQuizButton = (FancyButton) findViewById(R.id.getQuizButton);
+        getQuizButton.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
 
 
 
@@ -78,45 +149,45 @@ public class GetQuizActivity extends ActionBarActivity {
 
 
 
-            getQuizButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        getQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    try {
-                        String quizName = qn[0];
-                        String urlString = quizMap.get(quizName);
-                        // Create a URL for the desired page
-                        //String urlString = urlField.getText().toString();
-                       // Log.d("URL", urlString);
-                        //URL url = new URL(urlString);
-                        URL url = new URL(urlString);
+                try {
+                    String quizName = qn[0];
+                    String urlString = quizMap.get(quizName);
+                    // Create a URL for the desired page
+                    //String urlString = urlField.getText().toString();
+                    // Log.d("URL", urlString);
+                    //URL url = new URL(urlString);
+                    URL url = new URL(urlString);
 
-                        // Read all the text returned by the server
-                        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-                        String str = org.apache.commons.io.IOUtils.toString(in);
-                        Log.d("FILE", str);
+                    // Read all the text returned by the server
+                    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                    String str = org.apache.commons.io.IOUtils.toString(in);
+                    Log.d("FILE", str);
 
-                        Parser parser = new Parser();
-                        final Quiz quiz = parser.getQuiz(str);
+                    Parser parser = new Parser();
+                    final Quiz quiz = parser.getQuiz(str);
 
-                        Intent intent = new Intent(v.getContext(), QuestionActivity.class);
-                        intent.putExtra("quiz", quiz);
+                    Intent intent = new Intent(v.getContext(), QuestionActivity.class);
+                    intent.putExtra("quiz", quiz);
 //                   / finish();
-                        startActivityForResult(intent, 0);
+                    startActivityForResult(intent, 0);
 
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-
-
-
-
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
+
+
+
+
+
+
+            }
+        });
 
 
 
