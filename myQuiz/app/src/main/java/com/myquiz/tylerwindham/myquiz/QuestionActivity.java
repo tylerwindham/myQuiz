@@ -120,13 +120,15 @@ public class QuestionActivity extends ActionBarActivity {
 
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
 
+        //#################################################
         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
         final String qName = quiz.quizName;
-        final String uName; // need this
-        final Vector<Vector<String>> uAnswers;
+        final String uName = ""; // need this to be username
+        final Vector<Vector<String>> uAnswers = new Vector<Vector<String>>();
         // uAnswers.elementAt(0) == user answer
-        // uAnswers.elementAt(1) == correct answer 
+        // uAnswers.elementAt(1) == correct answer
         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+        //#################################################
 
 
 
@@ -147,7 +149,30 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(aButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("a");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
+
                             //Reached last question, return the final score
                             quiz.current++;
                            quiz.correctCount++;
@@ -191,7 +216,28 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("a");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
@@ -245,7 +291,27 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(bButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("b");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -292,7 +358,26 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("b");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
@@ -341,7 +426,26 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(cButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("c");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -386,7 +490,27 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("c");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
@@ -437,7 +561,26 @@ public class QuestionActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     if(dButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("d");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -483,7 +626,27 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("d");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
@@ -537,7 +700,26 @@ public class QuestionActivity extends ActionBarActivity {
                    // eButton.setBackgroundColor(Color.GRAY);
 
                     if(eButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("e");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -583,7 +765,26 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("e");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
