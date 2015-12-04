@@ -125,6 +125,7 @@ public class QuestionActivity extends ActionBarActivity {
         final String qName = quiz.quizName;
         final String uName = "Bob"; // need this to be username
         final Vector<Vector<String>> uAnswers = new Vector<Vector<String>>();
+        final int PAUSE_CONTROL = 1000000000;
         // uAnswers.elementAt(0) == user answer
         // uAnswers.elementAt(1) == correct answer
         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
@@ -169,6 +170,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -236,6 +238,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -310,6 +313,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -376,6 +380,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -444,6 +449,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -509,6 +515,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -579,6 +586,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -645,6 +653,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -718,6 +727,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
@@ -783,6 +793,7 @@ public class QuestionActivity extends ActionBarActivity {
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             HTTPPostActivity postact = new HTTPPostActivity();
                             postact.makeQuizPost(qName, uName, uAnswers);
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             // for HTTPPostActivity --- --- -- -- -- -- -- -- -
                             //#################################################
 
