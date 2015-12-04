@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class ScoreActivity extends ActionBarActivity {
     int index = 0;
     Quiz quiz;
-
+    ArrayList<String> userResponses;
     public String correctAnswer(int i){ return quiz.getQuestion(i).getAnswer(); }
 
     @Override
@@ -44,9 +43,8 @@ public class ScoreActivity extends ActionBarActivity {
         double score = getIntent().getDoubleExtra("score", 0);
         quiz = (Quiz) getIntent().getSerializableExtra("quizObj");
 
-        final ArrayList<String> userResponses = getIntent().getStringArrayListExtra("userChoices");
-        Log.d("MMM", userResponses.get(0));
-        Log.d("MMM", userResponses.get(1));
+        userResponses = getIntent().getStringArrayListExtra("userChoices");
+
         numericScore.setText(String.valueOf(score));
 
         final TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
@@ -81,7 +79,7 @@ public class ScoreActivity extends ActionBarActivity {
                     startActivityForResult(intent,0);
                 }else{
                     index++;
-                    questionLabel.setText("Question " + (index+1));
+                    questionLabel.setText("Question " + (index + 1));
                     chart.setData(new BarData(getXAxisValues(), getDataSet()));
                     chart.invalidate();
 
@@ -143,6 +141,11 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("D");
         xAxis.add("E");
 
+        for(int i = 0; i < xAxis.size(); i++){
+            if(xAxis.get(i).equals(userResponses.get(index))){
+                xAxis.set(i, xAxis.get(i) + " (user)");
+            }
+        }
         return xAxis;
     }
 
