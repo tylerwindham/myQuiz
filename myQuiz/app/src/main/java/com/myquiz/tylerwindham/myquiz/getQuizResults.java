@@ -134,19 +134,19 @@ public class getQuizResults {
 
         for(int i = 0; i < res.size(); i++){
             String ans = res.elementAt(i).answerForQuestion(questionNumber);
-            if(ans == "A"){
+            if(ans.equals("A")){
                 a++;
             }
-            else if(ans == "B"){
+            else if(ans.equals("B")){
                 b++;
             }
-            else if(ans == "C"){
+            else if(ans.equals("C")){
                 c++;
             }
-            else if(ans == "D"){
+            else if(ans.equals("D")){
                 d++;
             }
-            else if(ans == "E"){
+            else if(ans.equals("E")){
                 e++;
             }
         }
