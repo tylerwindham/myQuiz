@@ -196,6 +196,7 @@ public class QuestionActivity extends ActionBarActivity {
                             } catch (ClassNotFoundException e){
                                 //e.printStackTrace();
                             }
+                            //thread.sleep(2000);
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("quizObj", quiz);
                             intent.putExtra("score", quiz.score);
