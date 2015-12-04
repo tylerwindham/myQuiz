@@ -7,5 +7,9 @@
     <mapping directory="$APPLICATION_HOME_DIR$/myQuiz" vcs="Git" />
     <mapping directory="$APPLICATION_HOME_DIR$/myQuiz" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
   </component>
 </project>

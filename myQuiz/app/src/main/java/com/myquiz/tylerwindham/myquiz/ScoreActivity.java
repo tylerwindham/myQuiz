@@ -22,35 +22,38 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
-    int index;
+    int index = 0;
     Quiz quiz;
-    QuestionActivity q = new QuestionActivity();
-
-    //public Quiz quiz(){ return q.getQuizQs(); }
-    public String correctAnswer(int index){ return quiz.getQuestion(index).getAnswer(); }
+    ArrayList<String> userResponses;
+    public String correctAnswer(int i){ return quiz.getQuestion(i).getAnswer(); }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
+        setTitle("Results");
         index = 0;
         TextView scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         TextView numericScore = (TextView) findViewById(R.id.numericScore);
 
         double score = getIntent().getDoubleExtra("score", 0);
         quiz = (Quiz) getIntent().getSerializableExtra("quizObj");
+        userResponses = getIntent().getStringArrayListExtra("userChoices");
 
-        numericScore.setText(String.valueOf(score));
+        numericScore.setText(String.format("%.2f", score));
 
         final TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
         questionLabel.setText("Question " + (index+1));
 
         final BarChart chart = (BarChart) findViewById(R.id.chart);
-        chart.setData(new BarData(getXAxisValues(), getDataSet()));
+
+        // HTTP COMM
+        chart.setData(new BarData(getXAxisValues(), getDataSet(index+1)));
         chart.setDescription("");
         chart.animateXY(2000, 2000);
         chart.setDoubleTapToZoomEnabled(false); // gets rid of zooming into graph
@@ -80,7 +83,8 @@ public class ScoreActivity extends ActionBarActivity {
                     index++;
                     questionLabel.setText("Question " + (index+1));
                     Log.d("CREATE", index + "\n");
-                    chart.setData(new BarData(getXAxisValues(), getDataSet()));
+                    // HTTP COMM
+                    chart.setData(new BarData(getXAxisValues(), getDataSet(index+1)));
                     chart.invalidate();
 
                     if(index == quiz.questionList.size()-1){
@@ -116,13 +120,20 @@ public class ScoreActivity extends ActionBarActivity {
         }
     }
 
-    private ArrayList<BarDataSet> getDataSet() {
+    private ArrayList<BarDataSet> getDataSet(int qnum) {
         //pretend 100 students in class
+
+        // HTTP COMM
+        String qName = quiz.quizName;
+        getQuizResults res = new getQuizResults();
+        Vector<Number> a = res.getQuestionResults(qName, qnum);
+        Log.d("%%%% %%%%% qname", qName);
+        //Log.d("%%%% %%%%% qnum", );
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         Random rand = new Random();
         for(int i = 0; i < 5; i++){ // set class random data for now
-            valueSet1.add(new BarEntry(rand.nextInt(50), i));
+            valueSet1.add(new BarEntry( (int)a.elementAt(i) , i));
         }
 
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Question Statistics");
@@ -142,8 +153,9 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("E");
 
         for(int i = 0; i < xAxis.size(); i++){
-            if(xAxis.get(i) == correctAnswer(index))
-                xAxis.set(i, xAxis.get(i) +" (correct)");
+            if(xAxis.get(i).equals(userResponses.get(index))){
+                xAxis.set(i, xAxis.get(i) + " (user)");
+            }
         }
 
         return xAxis;

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class QuestionActivity extends ActionBarActivity {
 
@@ -32,21 +33,50 @@ public class QuestionActivity extends ActionBarActivity {
         try{
             List<Quiz> temp = (List<Quiz>) InternalStorage.readObject(getApplicationContext(),"Quizzes");
             if(temp.size() == 0){
+                Log.d("WRITE", "ABOUT TO WRITE");
                 InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+                Log.d("WRITE", "WRITING COMPLETE");
             }
 
 
         }catch (IOException e){
             e.printStackTrace();
+            Log.d("WRITE", "ABOUT TO WRITE");
+            try {
+                InternalStorage.writeObject(getApplicationContext(), "Quizzes", quizzes);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Log.d("WRITE", "WRITING COMPLETE");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
+<<<<<<< HEAD
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+=======
+
+        final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
+
+        //#################################################
+        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+        final String qName = quiz.quizName;
+        final String uName = "Bob"; // need this to be username
+        final Vector<Vector<String>> uAnswers = new Vector<Vector<String>>();
+        final int PAUSE_CONTROL = 1000000;
+        // uAnswers.elementAt(0) == user answer
+        // uAnswers.elementAt(1) == correct answer
+        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+        //#################################################
+
+
+
+>>>>>>> newbranch
         //quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
-            final Question ques = quiz.getQuestion(0);
+            final Question ques = new Question(quiz.getQuestion(quiz.current));
+            setTitle("Question " + Integer.toString(quiz.current+1));
 
             final Button aButton = (Button) findViewById(R.id.aButton);
             final Button bButton = (Button) findViewById(R.id.bButton);
@@ -54,19 +84,45 @@ public class QuestionActivity extends ActionBarActivity {
             final Button dButton = (Button) findViewById(R.id.dButton);
             final Button eButton = (Button) findViewById(R.id.eButton);
 
+            final ArrayList<String> userChoices = new ArrayList<String>();
 
             aButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("A");
                     if(aButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("A");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                       // resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
+
                             //Reached last question, return the final score
                             quiz.current++;
                            quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 //Use this to store list so that all quizzes can be stored
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
@@ -83,12 +139,15 @@ public class QuestionActivity extends ActionBarActivity {
                             } catch (ClassNotFoundException e){
                                 //e.printStackTrace();
                             }
+                            //thread.sleep(2000);
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("quizObj", quiz);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("score", quiz.score);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -102,7 +161,29 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("A");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
@@ -110,7 +191,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -130,13 +211,14 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
-
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
 
                             startActivityForResult(intent,0);
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -154,8 +236,30 @@ public class QuestionActivity extends ActionBarActivity {
             bButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("B");
                     if(bButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("B");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -163,7 +267,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -184,10 +288,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -201,14 +307,34 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("B");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
                             quiz.score = ((double)quiz.correctCount/ quiz.questionList.size()) * 100 ;
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -226,11 +352,13 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -248,8 +376,29 @@ public class QuestionActivity extends ActionBarActivity {
             cButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("C");
                     if(cButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("C");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -258,7 +407,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -276,10 +425,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -293,14 +444,35 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("C");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -320,11 +492,13 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -342,8 +516,29 @@ public class QuestionActivity extends ActionBarActivity {
             dButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("D");
                     if(dButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("D");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                       // resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -351,7 +546,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 //Get the current Quiz Vector that holds quizzes and add to quiz. Write the quiz vector
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
@@ -371,10 +566,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -388,7 +585,28 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("D");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
@@ -396,7 +614,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -414,11 +632,13 @@ public class QuestionActivity extends ActionBarActivity {
                             }
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;
@@ -437,11 +657,31 @@ public class QuestionActivity extends ActionBarActivity {
             eButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    userChoices.add("E");
                    // eButton.setBackgroundColor(Color.GRAY);
 
                     if(eButton.getText().toString().equals(ques.answer)){
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("E");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                       // resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
                             quiz.correctCount++;
@@ -450,7 +690,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
                                 if(!doesQuizExist(quizzes, quiz)){
@@ -469,10 +709,12 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent, 0);
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.correctCount++;
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
@@ -486,7 +728,27 @@ public class QuestionActivity extends ActionBarActivity {
                         }
 
                     }else{
+
+                        //#################################################
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        Vector<String> resp = new Vector<String>();
+                        resp.add("E");
+                        resp.add(ques.answer);
+                        uAnswers.add(resp);
+                        //resp.clear();
+                        // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                        //#################################################
+
                         if(quiz.current+1 == quiz.questionList.size()){
+
+                            //#################################################
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            HTTPPostActivity postact = new HTTPPostActivity();
+                            postact.makeQuizPost(qName, uName, uAnswers);
+
+                            // for HTTPPostActivity --- --- -- -- -- -- -- -- -
+                            //#################################################
+
                             //Reached last question, return the final score
                             quiz.current++;
 
@@ -494,7 +756,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Toast toast = Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG);
                             toast.show();
-
+                            for(int i = 0; i < PAUSE_CONTROL; i++){}
                             try {
 
                                 List<Quiz> quizzes = (List<Quiz>) InternalStorage.readObject(getApplicationContext(), "Quizzes");
@@ -514,11 +776,13 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
                         }else{
                             quiz.current++;
+                            setTitle("Question " + Integer.toString(quiz.current+1));
                             quiz.score = ((double)quiz.correctCount / quiz.questionList.size()) * 100 ;
                             ques.answer = quiz.questionList.get(quiz.current).answer;
                             ques.question = quiz.questionList.get(quiz.current).question;

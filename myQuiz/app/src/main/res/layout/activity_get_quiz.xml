@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -7,23 +8,33 @@
     tools:context="com.myquiz.tylerwindham.myquiz.GetQuizActivity">
 
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/quizURL"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:hint="URL"
-        android:textIsSelectable="false" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
         android:text="@string/get_quiz"
         android:id="@+id/getQuizButton"
         android:layout_below="@+id/quizURL"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp" />
+        android:layout_marginTop="54dp"
+        fancy:fb_text="Take Quiz"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_defaultColor="#6ea6ff"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_radius="30dp"
+        android:background="#6ea6ff"
+        android:textColor="#ffffff"
+        />
+
+
 
     <ImageView
         android:layout_width="wrap_content"
@@ -37,4 +48,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/quizURL" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/quizURL"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="562dp"
+        android:layout_marginStart="562dp" />
 </RelativeLayout>

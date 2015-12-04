@@ -1,14 +1,20 @@
 package com.myquiz.tylerwindham.myquiz;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -27,7 +33,10 @@ public class PastQuizzesActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_quizzes);
-        ListView listView = (ListView) findViewById(R.id.quizzes);
+        final ListView listView = (ListView) findViewById(R.id.quizzes);
+       // registerForContextMenu(listView);
+
+        setTitle("Past Quizzes");
       //  ActionBar bar = getActionBar();
         //bar.setDisplayHomeAsUpEnabled(true);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,7 +80,7 @@ public class PastQuizzesActivity extends ActionBarActivity {
                 //datum.put("score", "Score: " + String.valueOf(cachedEntry.score));
                 //data.add(datum);
 
-            SimpleAdapter adapter = new SimpleAdapter(this, data,
+           final SimpleAdapter adapter = new SimpleAdapter(this, data,
                     android.R.layout.simple_list_item_2,
                     new String[] {"name", "score"},
                     new int[] {android.R.id.text1,
@@ -92,6 +101,7 @@ public class PastQuizzesActivity extends ActionBarActivity {
                     startActivityForResult(intent,0);
                 }
             });
+
 
 
         } catch (IOException e) {
@@ -126,4 +136,11 @@ public class PastQuizzesActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+/*
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        this.getMenuInflater().inflate(R.menu.menu_past_quizzes, menu);
+    }
+*/
+
 }
