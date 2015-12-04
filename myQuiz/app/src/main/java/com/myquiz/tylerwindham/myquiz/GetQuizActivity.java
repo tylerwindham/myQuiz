@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 
 public class GetQuizActivity extends ActionBarActivity {
 
@@ -66,7 +68,7 @@ public class GetQuizActivity extends ActionBarActivity {
        //final EditText urlField = (EditText) findViewById(R.id.quizURL);
 
 
-        Button getQuizButton = (Button) findViewById(R.id.getQuizButton);
+        FancyButton getQuizButton = (FancyButton) findViewById(R.id.getQuizButton);
 
 
 
