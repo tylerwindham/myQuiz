@@ -46,7 +46,7 @@ public class ScoreActivity extends ActionBarActivity {
         double score = getIntent().getDoubleExtra("score", 0);
         quiz = (Quiz) getIntent().getSerializableExtra("quizObj");
 
-        numericScore.setText(String.valueOf(score));
+        numericScore.setText(String.format("%.2f", score));
 
         final TextView questionLabel = (TextView) findViewById(R.id.questionLabel);
         questionLabel.setText("Question " + (index+1));
