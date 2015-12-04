@@ -22,40 +22,6 @@ import java.util.Vector;
 
 public class QuestionActivity extends ActionBarActivity {
 
-    /*public Quiz getQuizQs(){
-        String q = "What is the capitol of Thailand?";
-        List<String> answers = new ArrayList<>();
-        answers.add("China");
-        answers.add("Bangcock");
-        answers.add("Texas");
-        answers.add("Bombay");
-        answers.add("Hamburg");
-        final String answer = "B";
-        final Question ques = new Question(q, answer, answers);
-
-        String q2 = "What is the capitol of Texas?";
-        List<String> answers2 = new ArrayList<>();
-        answers2.add("Austin");
-        answers2.add("Houston");
-        answers2.add("Dallas");
-        answers2.add("San Antonio");
-        answers2.add("Amarillo");
-
-        final String answer2 = "A";
-
-        final Question ques2 = new Question(q2, answer2, answers2);
-
-        List<Question> questions = new ArrayList<Question>();
-        questions.add(ques);
-        questions.add(ques2);
-
-        Log.d("TEST", "TEST");
-
-        final Quiz quizQuestions = new Quiz(questions);
-        //quizQuestions.quizName = "Quiz 1";
-        return quizQuestions;
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,37 +52,6 @@ public class QuestionActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-         /*
-        String q = "What is the capitol of Thailand?";
-        List<String> answers = new ArrayList<>();
-        answers.add("China");
-        answers.add("Bangcock");
-        answers.add("Texas");
-        answers.add("Bombay");
-        answers.add("Hamburg");
-        final String answer = "B";
-        final Question ques = new Question(q, answer, answers);
-
-        String q2 = "What is the capitol of Texas?";
-        List<String> answers2 = new ArrayList<>();
-        answers2.add("Austin");
-        answers2.add("Houston");
-        answers2.add("Dallas");
-        answers2.add("San Antonio");
-        answers2.add("Amarillo");
-
-        final String answer2 = "A";
-
-        final Question ques2 = new Question(q2, answer2, answers2);
-
-        List<Question> questions = new ArrayList<Question>();
-        questions.add(ques);
-        questions.add(ques2);
-
-        final Quiz quiz = new Quiz(questions);
-        quiz.quizName = "Quiz 1";
-
-        */
 
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
 
@@ -136,7 +71,7 @@ public class QuestionActivity extends ActionBarActivity {
         //quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
-            final Question ques = quiz.getQuestion(quiz.current);
+            final Question ques = new Question(quiz.getQuestion(quiz.current));
             setTitle("Question " + Integer.toString(quiz.current+1));
 
             final Button aButton = (Button) findViewById(R.id.aButton);
@@ -145,10 +80,12 @@ public class QuestionActivity extends ActionBarActivity {
             final Button dButton = (Button) findViewById(R.id.dButton);
             final Button eButton = (Button) findViewById(R.id.eButton);
 
+            final ArrayList<String> userChoices = new ArrayList<String>();
 
             aButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("A");
                     if(aButton.getText().toString().equals(ques.answer)){
 
                         //#################################################
@@ -201,6 +138,7 @@ public class QuestionActivity extends ActionBarActivity {
                             //thread.sleep(2000);
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("quizObj", quiz);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("score", quiz.score);
                             startActivityForResult(intent,0);
                         }else{
@@ -269,7 +207,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
-
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
 
                             startActivityForResult(intent,0);
@@ -294,6 +232,7 @@ public class QuestionActivity extends ActionBarActivity {
             bButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("B");
                     if(bButton.getText().toString().equals(ques.answer)){
 
                         //#################################################
@@ -345,6 +284,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
@@ -408,6 +348,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
@@ -431,6 +372,7 @@ public class QuestionActivity extends ActionBarActivity {
             cButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("C");
                     if(cButton.getText().toString().equals(ques.answer)){
 
                         //#################################################
@@ -479,6 +421,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
@@ -545,6 +488,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
@@ -568,6 +512,7 @@ public class QuestionActivity extends ActionBarActivity {
             dButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userChoices.add("D");
                     if(dButton.getText().toString().equals(ques.answer)){
 
                         //#################################################
@@ -617,6 +562,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
                         }else{
@@ -682,6 +628,7 @@ public class QuestionActivity extends ActionBarActivity {
                             }
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 
@@ -706,7 +653,7 @@ public class QuestionActivity extends ActionBarActivity {
             eButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    userChoices.add("E");
                    // eButton.setBackgroundColor(Color.GRAY);
 
                     if(eButton.getText().toString().equals(ques.answer)){
@@ -758,6 +705,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent, 0);
                         }else{
@@ -824,6 +772,7 @@ public class QuestionActivity extends ActionBarActivity {
 
                             Intent intent = new Intent(v.getContext(), ScoreActivity.class);
                             intent.putExtra("score", quiz.score);
+                            intent.putStringArrayListExtra("userChoices", userChoices);
                             intent.putExtra("quizObj", quiz);
                             startActivityForResult(intent,0);
 

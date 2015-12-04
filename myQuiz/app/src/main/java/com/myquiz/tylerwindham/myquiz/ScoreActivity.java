@@ -27,12 +27,10 @@ import java.util.Vector;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ScoreActivity extends ActionBarActivity {
-    int index;
+    int index = 0;
     Quiz quiz;
-    QuestionActivity q = new QuestionActivity();
-
-    //public Quiz quiz(){ return q.getQuizQs(); }
-    public String correctAnswer(int index){ return quiz.getQuestion(index).getAnswer(); }
+    ArrayList<String> userResponses;
+    public String correctAnswer(int i){ return quiz.getQuestion(i).getAnswer(); }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +43,7 @@ public class ScoreActivity extends ActionBarActivity {
 
         double score = getIntent().getDoubleExtra("score", 0);
         quiz = (Quiz) getIntent().getSerializableExtra("quizObj");
+        userResponses = getIntent().getStringArrayListExtra("userChoices");
 
         numericScore.setText(String.format("%.2f", score));
 
@@ -154,8 +153,9 @@ public class ScoreActivity extends ActionBarActivity {
         xAxis.add("E");
 
         for(int i = 0; i < xAxis.size(); i++){
-            if(xAxis.get(i) == correctAnswer(index))
-                xAxis.set(i, xAxis.get(i) +" (correct)");
+            if(xAxis.get(i).equals(userResponses.get(index))){
+                xAxis.set(i, xAxis.get(i) + " (user)");
+            }
         }
 
         return xAxis;

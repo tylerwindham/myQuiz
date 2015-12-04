@@ -29,7 +29,13 @@ public class Question implements Serializable {
         for(int i=0; i < answers.size(); ++i){
             this.question += "\n" + choices.get(i) + " " + answers.get(i);
         }
+    }
 
+    Question(Question other){
+        this.question = other.question;
+        this.answer = other.answer;
+        this.answers = other.answers;
+        this.choices = other.choices;
     }
 
     @Override
