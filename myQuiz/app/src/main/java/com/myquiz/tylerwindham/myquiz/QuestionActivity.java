@@ -123,7 +123,7 @@ public class QuestionActivity extends ActionBarActivity {
         //#################################################
         // for HTTPPostActivity --- --- -- -- -- -- -- -- -
         final String qName = quiz.quizName;
-        final String uName = ""; // need this to be username
+        final String uName = "Bob"; // need this to be username
         final Vector<Vector<String>> uAnswers = new Vector<Vector<String>>();
         // uAnswers.elementAt(0) == user answer
         // uAnswers.elementAt(1) == correct answer

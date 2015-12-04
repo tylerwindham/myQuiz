@@ -33,7 +33,7 @@ public class getQuizResults {
         //Log.d("URL", urlString);
         //URL url = new URL(urlString);
 
-    void getResults(String quizName){
+    Vector<resultTable> getResults(String quizName){
 
         //Vector<String> quizList = new Vector<String>();
         //Vector<Question> questionList = new Vector<Question>();
@@ -46,29 +46,37 @@ public class getQuizResults {
 
         try {
             // specified portal where answers are written. Answers written by users's applications
-            URL answerPortal = new URL("http://students.cse.tamu.edu/iks5005/results.txt");
+            URL answerPortal = new URL("http://students.cse.tamu.edu/iks5005/testFile.txt");
 
             InputStreamReader streamReader = new InputStreamReader(answerPortal.openStream());
             BufferedReader bufferedReader = new BufferedReader(streamReader);
 
 
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.charAt(0) == '*'){
+                if (line != "" && line.charAt(0) == '*'){
                     String qName = line.substring(1);
-                    if(qName == quizName) {
+                    Log.d("**** quizname", qName);
+                    Log.d("**** actual ", quizName);
+                    if(qName.equals(quizName)) {
+                        Log.d("**** enter", "success");
                         String userName = "";
                         line = bufferedReader.readLine();
                         if (line.charAt(0) == 'U') {
                             userName = line.substring(1);
+                            Log.d("**** username read", "success");
+                            resultTable restable = new resultTable(qName, userName);
+                            while ((line = bufferedReader.readLine()) != null && line.charAt(0) != '*') {
+                                String questlab = line.substring(0, 2);
+                                String userAns = line.substring(2, 3);
+                                String actualAns = line.substring(4, 5);
+                                Log.d("questlab", questlab);
+                                Log.d("userans", userAns);
+                                Log.d("actualans", actualAns);
+                                restable.addQuest(questlab, userAns, actualAns);
+                            }
+                            Log.d("**** reading restable", "success");
+                            totTable.add(restable);
                         }
-                        resultTable restable = new resultTable(qName, userName);
-                        while ((line = bufferedReader.readLine()) != null && line.charAt(0) != '*') {
-                            String questlab = line.substring(0, 2);
-                            String userAns = line.substring(2, 2);
-                            String actualAns = line.substring(4, 4);
-                            restable.addQuest(questlab, userAns, actualAns);
-                        }
-                        totTable.add(restable);
                     }
                 }
 
@@ -85,19 +93,20 @@ public class getQuizResults {
             Log.d("FAIL", "FAILURE TO OPEN QUIZ RESULT FILE");
         }
 
-        results = totTable;
+        //results = totTable;
+        return totTable;
 
     }
 
     Vector<Vector<Number>> getFinalResults(String quizName){
 
-        results.clear();
+        //results.clear();
 
-        getResults(quizName);
+        Vector<resultTable> res = getResults(quizName);
 
         Vector<Vector<Number>> finRes = new Vector<Vector<Number>>();
 
-        for(int i = 0; i < results.size(); i++){
+        for(int i = 0; i < res.size(); i++){
             Vector<Number> qRes = getQuestionResults(quizName, i);
             finRes.add(qRes);
             qRes.clear();
@@ -109,9 +118,9 @@ public class getQuizResults {
 
     Vector<Number> getQuestionResults(String quizName, int questionNumber){
 
-        results.clear();
+        //results.clear();
 
-        getResults(quizName);
+        Vector<resultTable> res = getResults(quizName);
 
         int a = 0;
         int b = 0;
@@ -119,21 +128,25 @@ public class getQuizResults {
         int d = 0;
         int e = 0;
 
-        for(int i = 0; i < results.size(); i++){
-            String ans = results.elementAt(i).answerForQuestion(questionNumber);
-            if(ans == "a"){
+        if(res.size() == 0){
+            Log.d("err", "error reading result");
+        }
+
+        for(int i = 0; i < res.size(); i++){
+            String ans = res.elementAt(i).answerForQuestion(questionNumber);
+            if(ans == "A"){
                 a++;
             }
-            else if(ans == "b"){
+            else if(ans == "B"){
                 b++;
             }
-            else if(ans == "c"){
+            else if(ans == "C"){
                 c++;
             }
-            else if(ans == "d"){
+            else if(ans == "D"){
                 d++;
             }
-            else if(ans == "e"){
+            else if(ans == "E"){
                 e++;
             }
         }

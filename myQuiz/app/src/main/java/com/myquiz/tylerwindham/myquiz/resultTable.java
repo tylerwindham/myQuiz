@@ -1,5 +1,7 @@
 package com.myquiz.tylerwindham.myquiz;
 
+import android.util.Log;
+
 import java.util.Vector;
 
 /**
@@ -15,11 +17,15 @@ public class resultTable {
     resultTable(String qname, String uName){
         quizName = qname;
         userId = uName;
+        table = new Vector<Vector<String>>();
 
     }
 
     void addQuest(String q, String userAnswer, String actualAnswer){
         Vector<String> a = new Vector<String>();
+        if(q.length() == 0 || userAnswer.length() == 0 || actualAnswer.length() == 0){
+            Log.d("ERROR", "addquest fields empty");
+        }
         a.add(q);
         a.add(userAnswer);
         a.add(actualAnswer);
