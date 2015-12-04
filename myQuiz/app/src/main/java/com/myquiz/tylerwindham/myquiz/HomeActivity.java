@@ -14,10 +14,14 @@ import android.view.View;
 import android.os.StrictMode;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.common.api.PendingResult;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +35,9 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -49,18 +55,26 @@ public class HomeActivity extends ActionBarActivity {
         FancyButton pastQuiz = (FancyButton) findViewById(R.id.pastQuizzesButton);
         pastQuiz.setFocusBackgroundColor(Color.parseColor("#B6B6B6"));
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
         SharedPreferences settings = getSharedPreferences(Preferences.PREFS_NAME, 0); // 0 - for private mode
         SharedPreferences.Editor editor = settings.edit();
 
-//Set "hasLoggedIn" to true
+        //Set "hasLoggedIn" to true
         editor.putBoolean("hasLoggedIn", true);
 
-// Commit the edits!
+        // Commit the edits!
         editor.commit();
 
-        //String username = getIntent().getStringExtra("username");
-        //Log.d("USERNAME", username);
+        // This is to acquire username from google acct
+        String username = getIntent().getStringExtra("username");
+        Log.d("USERNAME", username);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -87,7 +101,6 @@ public class HomeActivity extends ActionBarActivity {
                     Intent intent = new Intent(v.getContext(), GetQuizActivity.class);
                     startActivityForResult(intent,0);
 
-
                 }
             });
 
@@ -107,6 +120,11 @@ public class HomeActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,8 +146,13 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         if (id == R.id.sign_out) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, 0);
+            if (mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.clearDefaultAccountAndReconnect();
+                mGoogleApiClient.disconnect();
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivityForResult(intent, 0);
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -143,20 +166,19 @@ public class HomeActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-//    class task extends AsyncTask<String, String, Void> {
-//        private ProgressDialog progDialog = new ProgressDialog(HomeActivity.this);
-//        InputStream is = null;
-//        String result = "";
-//        protected void onPreExecute(){
-//            progDialog.setMessage("Fetching data...");
-//            progDialog.show();
-//            progDialog.setOnCancelListener(new DialogInterface.OnCancelListener()) {
-//                @Override
-//                public void onCancel(DialogInterface) {
-//                    task.this.cancel(true);
-//                }
-//            });
-//        }
-//    }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
 
 }
