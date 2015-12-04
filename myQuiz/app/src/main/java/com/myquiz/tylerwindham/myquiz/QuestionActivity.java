@@ -52,10 +52,6 @@ public class QuestionActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-<<<<<<< HEAD
-        final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
-=======
-
         final Quiz quiz = (Quiz) getIntent().getSerializableExtra("quiz");
 
         //#################################################
@@ -70,8 +66,6 @@ public class QuestionActivity extends ActionBarActivity {
         //#################################################
 
 
-
->>>>>>> newbranch
         //quiz.quizName = "Quiz1";
             question.setText(quiz.questionList.get(quiz.current).question);
             score.setText("Score: " + quiz.score);
